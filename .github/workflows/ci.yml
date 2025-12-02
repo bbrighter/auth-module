@@ -11,6 +11,7 @@ on:
 permissions:
     contents: read
     id-token: write
+    packages: write
 
 jobs:
     test:
@@ -48,17 +49,17 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - name: Install pnpm
-              uses: pnpm/action-setup@v4
-              with:
-                  run_install: false
-
             - name: Install Node.js
               uses: actions/setup-node@v4
               with:
                   node-version: 22
                   cache: "pnpm"
                   registry-url: "https://registry.npmjs.org/"
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  run_install: false
 
             - name: Get packages
               run: pnpm install
