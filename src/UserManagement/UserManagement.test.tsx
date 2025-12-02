@@ -7,17 +7,17 @@ describe('user management', () => {
     const mockApi = {
         AddUserToProductInstance: async (name: string) => ({ id: '999' }),
         GetUsersForProductInstance: async () => ({ users: [{ name: 'name', id: '123' }] }),
-        RemoveUserFromProductInstance: async (name: string) => { }
+        RemoveUserFromProductInstance: async (name: string) => { },
     }
 
     it('renders', async () => {
-        render(<UserManagement api={mockApi} open={true} onClose={() => { }} />)
+        render(<UserManagement api={mockApi} />)
 
         expect(await screen.findByText('Nutzerverwaltung')).toBeInTheDocument()
     })
 
     it('delete', async () => {
-        render(<UserManagement api={mockApi} open={true} onClose={() => { }} />)
+        render(<UserManagement api={mockApi} />)
 
         const user = await screen.findByText('name')
         expect(user).toBeInTheDocument()
@@ -29,7 +29,7 @@ describe('user management', () => {
     })
 
     it('invite', async () => {
-        render(<UserManagement api={mockApi} open={true} onClose={() => { }} />)
+        render(<UserManagement api={mockApi} />)
 
         const inviteInput = await screen.findByLabelText('Nutzer einladen')
         expect(inviteInput).toBeInTheDocument()
