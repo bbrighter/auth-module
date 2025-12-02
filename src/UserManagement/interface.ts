@@ -12,7 +12,7 @@ interface UserResponse {
 }
 
 export interface UserAPI {
-    AddUserToProductInstance(name: string): Promise<UUIDResponse>
+    AddUserToProductInstance(_name: string): Promise<UUIDResponse>
     GetUsersForProductInstance(): Promise<UserListResponse>
-    RemoveUserFromProductInstance(name: string): Promise<void>
+    RemoveUserFromProductInstance(_name: string): Promise<void>
 }
