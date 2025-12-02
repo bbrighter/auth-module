@@ -1,4 +1,4 @@
-name: Test
+name: Test and publish
 
 on:
     push:
@@ -7,6 +7,10 @@ on:
         branches:
             - "**"
     workflow_dispatch:
+
+permissions:
+    contents: read
+    id-token: write
 
 jobs:
     test:
@@ -40,10 +44,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v') && success()
         runs-on: ubuntu-24.04
 
-        permissions:
-            contents: read
-            id-token: write
-
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -69,4 +69,4 @@ jobs:
               run: pnpm build
 
             - name: Publish to npm
-              run: pnpm publish --provenance --ignore-scripts --no-git-checks
+              run: pnpm publish --ignore-scripts --no-git-checks
