@@ -1,11 +1,14 @@
 {
-  "name": "auth-module",
+  "name": "@bbrighter/auth-module",
   "version": "1.0.0",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsup",
     "test": "vitest",
