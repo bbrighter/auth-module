@@ -9,10 +9,8 @@ import UserInvite from './components/UserInvite';
 
 export function UserManagement({ api }: { api: UserAPI }) {
     const [storedApi, setApi] = useAtom(apiAtom)
-    console.log('rendering')
 
     useEffect(() => {
-        console.log('set api to:', api)
         setApi(api)
     }, [api])
 

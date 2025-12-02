@@ -40,6 +40,10 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v') && success()
         runs-on: ubuntu-24.04
 
+        permissions:
+            contents: read
+            id-token: write
+
         steps:
             - name: Checkout
               uses: actions/checkout@v4
