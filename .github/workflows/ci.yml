@@ -66,6 +66,9 @@ jobs:
             - name: Get packages
               run: pnpm install
 
+            - name: Upgrade npm
+              run: npm install -g npm@latest
+
             - name: npm version
               run: npm --version
 
