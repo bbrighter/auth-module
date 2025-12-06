@@ -5,9 +5,9 @@ import userEvent from '@testing-library/user-event';
 
 describe('user management', () => {
     const mockApi = {
-        AddUserToProductInstance: async (name: string) => ({ id: '999' }),
+        AddUserToProductInstance: async (_name: string) => ({ id: '999' }),
         GetUsersForProductInstance: async () => ({ users: [{ name: 'name', id: '123' }] }),
-        RemoveUserFromProductInstance: async (name: string) => { },
+        RemoveUserFromProductInstance: async (_name: string) => { },
     }
 
     it('renders', async () => {
