@@ -1,13 +1,28 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AuthData, LoginParams } from './interface';
-import Login from './Login';
+import { Login } from './Login';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getDefaultStore } from 'jotai';
 import { getPermissionsAtom } from './store';
+import { AuthProvider } from './AuthProvider';
 
 
+let mockLocation = '/login'
 const navigateSpy = vi.fn();
+const mockSearchParams = new URLSearchParams('redirectTo=redirectUrl');
+
+vi.mock('wouter', () => {
+    const actual = vi.importActual('wouter')
+    return {
+        ...actual,
+        useLocation: () => [mockLocation, (to: string) => {
+            mockLocation = to
+            navigateSpy(to)
+        }],
+        useSearchParams: () => [mockSearchParams, vi.fn()],
+    }
+})
 
 describe('Login', () => {
     const mockApi = {
@@ -16,15 +31,10 @@ describe('Login', () => {
         GetPermissions: async () => ({ instances: [{ piid: '22990bce-4968-46c6-bcc8-6654f8a5cf35', product: 'shopping-list' }], userId: '123', userName: 'name' } as AuthData),
     }
 
-    vi.mock('wouter', () => {
-        return {
-            ...vi.importActual('wouter'),
-            useLocation: () => ['/login', navigateSpy],
-        }
-    })
 
     beforeEach(() => {
-        vi.resetAllMocks()
+        vi.clearAllMocks()
+        mockLocation = '/login'
     })
 
     const login = async () => {
@@ -42,21 +52,22 @@ describe('Login', () => {
     }
 
     it('Login redirects to redirect url', async () => {
-
-        render(<Login api={mockApi} productKey={'shopping-list'} redirectTo='redirectUrl' />)
+        render(<AuthProvider api={mockApi}>
+            <Login productKey={'shopping-list'} />
+        </AuthProvider>)
 
         await login()
-
 
         expect(navigateSpy).toHaveBeenCalledWith('redirectUrl')
     })
 
     it('Login redirects to piid from permissions', async () => {
-        render(<Login api={mockApi} productKey={'shopping-list'} />)
+        render(<AuthProvider api={mockApi}>
+            <Login productKey={'shopping-list'} />
+        </AuthProvider>)
         await act(async () => {
             await getDefaultStore().set(getPermissionsAtom)
         })
-
 
         await login()
 

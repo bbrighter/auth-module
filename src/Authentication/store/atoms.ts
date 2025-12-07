@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { AuthApi } from '../interface';
-import { ProductInstance } from './types';
+import { ProductInstance, ProductKey } from './types';
 import { atomWithLocation } from 'jotai-location';
 
 const storage = {
@@ -15,3 +15,4 @@ export const apiAtom = atom<AuthApi | null>(null)
 export const usernameAtom = atom('')
 export const productInstancesAtom = atom<Array<ProductInstance>>([])
 export const locationAtom = atomWithLocation()
+export const productKeyAtom = atom<ProductKey | null>(null)

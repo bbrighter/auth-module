@@ -51,6 +51,6 @@
     "jotai": "2.x",
     "jotai-location": "^0.6.2",
     "react": "19.x",
-    "wouter": "^3.8.1"
+    "wouter": "^3.x"
   }
 }

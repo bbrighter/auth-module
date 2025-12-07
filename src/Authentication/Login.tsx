@@ -3,51 +3,47 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import { useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'wouter';
-import { AuthApi } from './interface';
-import { apiAtom, loginAtom, ProductKey } from './store';
-import { useActiveInstance } from './hooks/usePermissions';
+import { useLocation, useSearchParams } from 'wouter';
+import { loginAtom, ProductKey } from './store';
+import { useActiveInstance, useGetPermissions } from './hooks/usePermissions';
 
-export default function Login({ api, productKey, redirectTo }: { api: AuthApi, productKey: ProductKey, redirectTo?: string }) {
-    const setApi = useSetAtom(apiAtom)
+export function Login() {
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
     const login = useSetAtom(loginAtom)
-    const activeInstance = useActiveInstance(productKey)
+    const activeInstance = useActiveInstance()
     const [, navigate] = useLocation()
     const [loginState, setLoginState] = useState<'default' | 'error' | 'loading' | 'success'>('default')
+    const [searchParams] = useSearchParams()
+    const redirectTo = searchParams.get('redirectTo')
 
-    const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value)
-    }
-
-    const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value)
-    }
+    const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => { setName(e.target.value) }
+    const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) }
 
     const onLogin = async () => {
         setLoginState('loading')
         const ok = await login({ password: password, userName: name })
-        if (ok) {
-            setLoginState('success')
-        } else {
+        if (!ok) {
             setLoginState('error')
+            return
         }
+        setLoginState('success')
     }
 
     useEffect(() => {
-        setApi(api)
-    }, [])
+        if (loginState != 'success') return
 
-    useEffect(() => {
-        if (loginState == 'success' && redirectTo) {
-            navigate(redirectTo)
+        if (redirectTo) {
+            navigate('/' + redirectTo)
             return
         }
-        if (loginState == 'success' && activeInstance && activeInstance.id) {
-            navigate(`/${activeInstance.id}`)
+
+        if (activeInstance && activeInstance.id) {
+            navigate('/' + activeInstance.id)
+            return
         }
-    }, [activeInstance, loginState])
+
+    }, [activeInstance, redirectTo, navigate, loginState])
 
     return (<Container sx={{ padding: '2rem', display: 'flex', flexDirection: 'column', rowGap: '1rem', width: '20rem' }}>
         <TextField label="Name" value={name} onChange={onNameChange} />
