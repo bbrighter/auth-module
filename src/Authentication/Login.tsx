@@ -4,8 +4,8 @@ import TextField from '@mui/material/TextField';
 import { useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'wouter';
-import { loginAtom, ProductKey } from './store';
-import { useActiveInstance, useGetPermissions } from './hooks/usePermissions';
+import { loginAtom } from './store';
+import { useActiveInstance } from './hooks/usePermissions';
 
 export function Login() {
     const [name, setName] = useState('')
@@ -34,7 +34,8 @@ export function Login() {
         if (loginState != 'success') return
 
         if (redirectTo) {
-            navigate('/' + redirectTo)
+            const redirectUrl = redirectTo.startsWith('/') ? redirectTo : '/' + redirectTo
+            navigate(redirectUrl)
             return
         }
 

@@ -10,7 +10,7 @@ import { AuthProvider } from './AuthProvider';
 
 let mockLocation = '/login'
 const navigateSpy = vi.fn();
-const mockSearchParams = new URLSearchParams('redirectTo=redirectUrl');
+let mockSearchParams = new URLSearchParams('redirectTo=/redirectUrl');
 
 vi.mock('wouter', () => {
     const actual = vi.importActual('wouter')
@@ -52,18 +52,19 @@ describe('Login', () => {
     }
 
     it('Login redirects to redirect url', async () => {
-        render(<AuthProvider api={mockApi}>
-            <Login productKey={'shopping-list'} />
+        render(<AuthProvider api={mockApi} productKey='shopping-list'>
+            <Login />
         </AuthProvider>)
 
         await login()
 
-        expect(navigateSpy).toHaveBeenCalledWith('redirectUrl')
+        expect(navigateSpy).toHaveBeenCalledWith('/redirectUrl')
     })
 
     it('Login redirects to piid from permissions', async () => {
-        render(<AuthProvider api={mockApi}>
-            <Login productKey={'shopping-list'} />
+        mockSearchParams = new URLSearchParams()
+        render(<AuthProvider api={mockApi} productKey='shopping-list'>
+            <Login />
         </AuthProvider>)
         await act(async () => {
             await getDefaultStore().set(getPermissionsAtom)

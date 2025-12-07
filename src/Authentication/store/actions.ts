@@ -29,4 +29,7 @@ export const getPermissionsAtom = atom(null, async (get, set) => {
 
     const instances = respToProductInstances(resp)
     set(productInstancesAtom, instances)
+
+    const userName = resp.userName
+    set(usernameAtom, userName)
 })

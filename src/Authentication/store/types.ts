@@ -4,7 +4,6 @@ export type ProductInstance = {
     id: string
     productName: string
     productId: string
-    selected: boolean
     url: string
 }
 

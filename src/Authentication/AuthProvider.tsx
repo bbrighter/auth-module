@@ -9,10 +9,5 @@ export function AuthProvider({ api, productKey, children }: { api: AuthApi, prod
     setApi(api)
     setProductKey(productKey)
 
-    // useEffect(() => {
-    //     console.log('Setting API to:', api)
-    //     setApi(api);
-    // }, [api]);
-
     return <>{children}</>;
 }

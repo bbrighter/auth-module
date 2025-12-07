@@ -10,12 +10,6 @@ export const useGetPermissions = (dependencies: Array<unknown> = []) => {
     }, dependencies)
 }
 
-export const usePermissions = () => {
-    const permissions = useAtomValue(productInstancesAtom)
-    return permissions
-}
+export const usePermissions = () => useAtomValue(productInstancesAtom)
 
-export const useActiveInstance = () => {
-    const selectedInstance = useAtomValue(selectedProductInstanceAtom)
-    return selectedInstance
-}
+export const useActiveInstance = () => useAtomValue(selectedProductInstanceAtom)
