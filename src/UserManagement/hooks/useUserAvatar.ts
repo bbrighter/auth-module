@@ -1,11 +1,3 @@
-import { useAtomValue } from 'jotai';
-import { userNameAtom } from '../store';
-
-export function useCurrentUserAvatar() {
-    const userName = useAtomValue(userNameAtom)
-    return stringAvatar(userName)
-}
-
 export function useUserAvatar(name: string) {
     return stringAvatar(name)
 }

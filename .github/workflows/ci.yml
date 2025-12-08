@@ -1,82 +1,88 @@
 name: Test and publish
 
 on:
-    push:
-        tags:
-            - "v*"
-        branches:
-            - "**"
-    workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+    branches:
+      - "**"
+  workflow_dispatch:
 
 permissions:
-    contents: read
-    id-token: write
+  contents: read
+  id-token: write
 
 jobs:
-    test:
-        runs-on: ubuntu-24.04
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Install pnpm
-              uses: pnpm/action-setup@v4
-              with:
-                  run_install: false
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
 
-            - name: Install Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
-                  cache: "pnpm"
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
 
-            - name: Get packages
-              run: pnpm install
+      - name: Get packages
+        run: pnpm install
 
-            - name: Lint
-              run: pnpm lint
+      - name: knip
+        run: pnpm knip
 
-            - name: Test
-              run: pnpm test
+      - name: Dependency cruiser
+        run: pnpm dependencies:ci
 
-            - name: npm version
-              run: npm --version
+      - name: Lint
+        run: pnpm lint
 
-    publish:
-        needs: test
-        if: startsWith(github.ref, 'refs/tags/v') && success()
-        runs-on: ubuntu-24.04
+      - name: Test
+        run: pnpm test
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+      - name: npm version
+        run: npm --version
 
-            - name: Install pnpm
-              uses: pnpm/action-setup@v4
-              with:
-                  run_install: false
+  publish:
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/v') && success()
+    runs-on: ubuntu-24.04
 
-            - name: Install Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
-                  cache: "pnpm"
-                  registry-url: "https://registry.npmjs.org/"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Get packages
-              run: pnpm install
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
 
-            - name: Upgrade npm
-              run: npm install -g npm@latest
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+          registry-url: "https://registry.npmjs.org/"
 
-            - name: npm version
-              run: npm --version
+      - name: Get packages
+        run: pnpm install
 
-            - name: Sync version from tag
-              run: pnpm version ${GITHUB_REF_NAME#v} --no-git-tag-version
+      - name: Upgrade npm
+        run: npm install -g npm@latest
 
-            - name: Build
-              run: pnpm build
+      - name: npm version
+        run: npm --version
 
-            - name: Publish to npm
-              run: pnpm publish --ignore-scripts --no-git-checks
+      - name: Sync version from tag
+        run: pnpm version ${GITHUB_REF_NAME#v} --no-git-tag-version
+
+      - name: Build
+        run: pnpm build
+
+      - name: Publish to npm
+        run: pnpm publish --ignore-scripts --no-git-checks
