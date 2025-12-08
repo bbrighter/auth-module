@@ -5,12 +5,20 @@ node_modules
 src
 .github
 
-# pnpm
-package.json
-pnpm-lock.yml
+# local build
+*.tgz
 
 # Configs
 tsconfig.json
 tsup.config.ts
 vitest.config.ts
 eslint.config.js
+knip.config.ts
+.dependency-cruiser.cjs
+
+# Dependency cruiser output
+depcruiser-graph.html
+depcruiser-graph.svg
+
+# Testing
+coverage
