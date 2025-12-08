@@ -1,7 +1,7 @@
 import { createStore } from 'jotai';
 import { describe, expect, it, test, vi } from 'vitest';
 import { apiAtom, locationAtom, productInstancesAtom, tokenAtom, usernameAtom } from './atoms';
-import { selectedProductInstanceAtom } from './selectors';
+import { piidAtom, selectedProductInstanceAtom } from './selectors';
 import { getPermissionsAtom, loginAtom, logoutAtom } from './actions';
 import { createTestStore } from '../../__test__/testUtils';
 import { AuthApi } from '../interface';
@@ -29,12 +29,16 @@ describe('selectors', () => {
 
             const selectedInstance = store.get(selectedProductInstanceAtom)
             expect(selectedInstance?.id).toBe('f1857897-25c4-4229-9ec0-15b01f109f56')
+            const piid = store.get(piidAtom)
+            expect(piid).toBe('f1857897-25c4-4229-9ec0-15b01f109f56')
         })
 
         it('url guid exists, pick fitting', () => {
             store = createTestStore([[locationAtom, { pathname: '/f29565f9-bb1b-44a4-9926-34792f7644f5' }], [productInstancesAtom, instances]])
             const selectedInstance = store.get(selectedProductInstanceAtom)
             expect(selectedInstance?.id).toBe('f29565f9-bb1b-44a4-9926-34792f7644f5')
+            const piid = store.get(piidAtom)
+            expect(piid).toBe('f29565f9-bb1b-44a4-9926-34792f7644f5')
         })
 
         it('url guid, but not in permissions, pick first from permissions', () => {
@@ -42,9 +46,10 @@ describe('selectors', () => {
 
             const selectedInstance = store.get(selectedProductInstanceAtom)
             expect(selectedInstance?.id).toBe('f1857897-25c4-4229-9ec0-15b01f109f56')
+            const piid = store.get(piidAtom)
+            expect(piid).toBe('f1857897-25c4-4229-9ec0-15b01f109f56')
         })
     })
-
 })
 
 
