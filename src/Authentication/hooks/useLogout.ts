@@ -4,7 +4,9 @@ import { useNavigateLogin } from '../navigation/useNavigate'
 
 export const useLogout = () => {
     const logout = useSetAtom(logoutAtom)
-    logout()
 
-    useNavigateLogin()
+    return () => {
+        logout()
+        useNavigateLogin()
+    }
 }
