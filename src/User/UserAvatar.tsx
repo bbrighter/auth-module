@@ -1,5 +1,15 @@
-export function useUserAvatar(name: string) {
-    return stringAvatar(name)
+import Avatar from '@mui/material/Avatar'
+
+export const UserAvatar = (props: {
+    onClick: React.MouseEventHandler<HTMLDivElement>,
+    userName: string
+}) => {
+    return (
+        <Avatar
+            onClick={props.onClick}
+            {...stringAvatar(props.userName)}
+        />
+    )
 }
 
 

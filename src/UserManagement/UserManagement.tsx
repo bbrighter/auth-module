@@ -1,25 +1,17 @@
-import { useAtom } from 'jotai';
-import { UserAPI } from './interface';
-import { apiAtom } from './store/atoms';
-import { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import UserList from './components/UserList';
 import UserInvite from './components/UserInvite';
+import { useAtomValue } from 'jotai';
+import { userApiAtom } from './store';
 
-export function UserManagement({ api }: { api: UserAPI }) {
-    const [storedApi, setApi] = useAtom(apiAtom)
-
-    useEffect(() => {
-        setApi(api)
-    }, [api])
-
-    if (!storedApi) return (<>Nothing found</>)
-
+export function UserManagement({ currentUserName }: { currentUserName: string }) {
+    const api = useAtomValue(userApiAtom)
+    if (!api) return (<>Loading...</>)
     return (
         <Box>
             <Typography variant='h4'>Nutzerverwaltung</Typography>
-            <UserList />
+            <UserList currentUserName={currentUserName} />
             <UserInvite />
         </Box>
     )

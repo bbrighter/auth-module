@@ -34,7 +34,7 @@ export default defineConfig([
       'react/react-in-jsx-scope': 'off',
       'react-hooks/exhaustive-deps': 'off',
       'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     }
   },
 ])

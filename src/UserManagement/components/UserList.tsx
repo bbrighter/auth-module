@@ -9,7 +9,7 @@ import UserDeleteButton from './UserDeleteButton'
 import { getUsersAtom, usersAtom } from '../store'
 import { useUserAvatar } from '../hooks/useUserAvatar'
 
-export default function UserList() {
+export default function UserList({ currentUserName }: { currentUserName: string }) {
     const users = useAtomValue(usersAtom)
     const getUsers = useSetAtom(getUsersAtom)
     const props = useUserAvatar
@@ -23,12 +23,13 @@ export default function UserList() {
         <List sx={{ pt: '1rem', pb: '1rem' }}>
             {users.map(u => (
                 <ListItem key={u.id}
-                    secondaryAction={<UserDeleteButton user={u} />}
+                    secondaryAction={<UserDeleteButton user={u} currentUserName={currentUserName} />}
                 >
                     <ListItemAvatar sx={{ pr: '1rem' }}><Avatar {...props(u.name)} /></ListItemAvatar>
                     <ListItemText primary={u.name} />
                 </ListItem>
-            ))}
-        </List>
+            ))
+            }
+        </List >
     )
 }
