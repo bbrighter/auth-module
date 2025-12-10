@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createTestStore } from '../../__test__/testUtils';
-import { apiAtom, usersAtom } from './atoms';
+import { userApiAtom, usersAtom } from './atoms';
 import { deleteUserAtom, getUsersAtom, inviteUserAtom } from './actions';
 
 describe('actions', () => {
@@ -12,7 +12,7 @@ describe('actions', () => {
     }
 
     it('getUserAtom', async () => {
-        const store = createTestStore([[apiAtom, mockApi]])
+        const store = createTestStore([[userApiAtom, mockApi]])
 
         await store.set(getUsersAtom)
 
@@ -25,7 +25,7 @@ describe('actions', () => {
 
     describe('inivteUserAtom', () => {
         it('success', async () => {
-            const store = createTestStore([[apiAtom, mockApi]])
+            const store = createTestStore([[userApiAtom, mockApi]])
 
             await store.set(inviteUserAtom, { userName: 'new name' })
 
@@ -38,7 +38,7 @@ describe('actions', () => {
 
         it('error', async () => {
             mockApi.AddUserToProductInstance = vi.fn().mockRejectedValueOnce({ status: 401 })
-            const store = createTestStore([[apiAtom, mockApi]])
+            const store = createTestStore([[userApiAtom, mockApi]])
 
             const status = await store.set(inviteUserAtom, { userName: 'new name' })
             expect(status).toBe(401)
@@ -47,7 +47,7 @@ describe('actions', () => {
 
 
     it('deleteUserAtom', async () => {
-        const store = createTestStore([[apiAtom, mockApi], [usersAtom, [{ name: 'name', id: '456' }]]])
+        const store = createTestStore([[userApiAtom, mockApi], [usersAtom, [{ name: 'name', id: '456' }]]])
 
         await store.set(deleteUserAtom, { userName: 'name' })
 

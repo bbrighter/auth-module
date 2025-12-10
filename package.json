@@ -16,6 +16,7 @@
     "test:cover": "test --coverage",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "tsc": "tsc",
     "knip": "knip",
     "dependencies:ci": "npx depcruise src  --include-only \"^src\"",
     "dependencies:table": "npx depcruise src  --include-only \"^src\" --output-type html > depcruiser-graph.html",

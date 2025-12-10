@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
 import { useSetAtom } from 'jotai';
 import { AuthApi } from './interface';
-import { apiAtom, ProductKey, productKeyAtom } from './store';
+import { authApiAtom, ProductKey, productKeyAtom } from './store';
 
 export function AuthProvider({ api, productKey, children }: { api: AuthApi, productKey: ProductKey, children: ReactNode }) {
-    const setApi = useSetAtom(apiAtom);
+    const setApi = useSetAtom(authApiAtom);
     const setProductKey = useSetAtom(productKeyAtom)
     setApi(api)
     setProductKey(productKey)

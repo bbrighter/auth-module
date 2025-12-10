@@ -3,10 +3,10 @@ import Typography from '@mui/material/Typography';
 import UserList from './components/UserList';
 import UserInvite from './components/UserInvite';
 import { useAtomValue } from 'jotai';
-import { apiAtom } from './store';
+import { userApiAtom } from './store';
 
 export function UserManagement({ currentUserName }: { currentUserName: string }) {
-    const api = useAtomValue(apiAtom)
+    const api = useAtomValue(userApiAtom)
     if (!api) return (<>Loading...</>)
     return (
         <Box>

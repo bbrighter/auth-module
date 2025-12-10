@@ -11,7 +11,7 @@ const storage = {
 }
 
 export const tokenAtom = atomWithStorage('new-token', '', storage)
-export const apiAtom = atom<AuthApi | null>(null)
+export const authApiAtom = atom<AuthApi | null>(null)
 export const usernameAtom = atom('')
 export const productInstancesAtom = atom<Array<ProductInstance>>([])
 export const locationAtom = atomWithLocation()

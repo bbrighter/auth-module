@@ -1,10 +1,10 @@
 import { atom } from 'jotai';
-import { apiAtom, productInstancesAtom, tokenAtom, usernameAtom } from './atoms';
+import { authApiAtom, productInstancesAtom, tokenAtom, usernameAtom } from './atoms';
 import { respToProductInstances } from './types';
 
 export const loginAtom = atom(null, async (get, set, { userName, password }: { userName: string, password: string }): Promise<boolean> => {
-    const api = get(apiAtom)
-    if (!api) throw new Error('ApiAtom must be defined')
+    const api = get(authApiAtom)
+    if (!api) return false
 
     try {
         const resp = await api.Login({ userName, password })
@@ -23,8 +23,8 @@ export const logoutAtom = atom(null, (_get, set) => {
 
 
 export const getPermissionsAtom = atom(null, async (get, set) => {
-    const api = get(apiAtom)
-    if (!api) throw new Error('ApiAtom must be defined')
+    const api = get(authApiAtom)
+    if (!api) return
     const resp = await api.GetPermissions()
 
     const instances = respToProductInstances(resp)

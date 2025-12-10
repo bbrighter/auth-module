@@ -1,6 +1,6 @@
 import { createStore } from 'jotai';
 import { describe, expect, it, test, vi } from 'vitest';
-import { apiAtom, locationAtom, productInstancesAtom, tokenAtom, usernameAtom } from './atoms';
+import { authApiAtom, locationAtom, productInstancesAtom, tokenAtom, usernameAtom } from './atoms';
 import { piidAtom, selectedProductInstanceAtom } from './selectors';
 import { getPermissionsAtom, loginAtom, logoutAtom } from './actions';
 import { createTestStore } from '../../__test__/testUtils';
@@ -63,7 +63,7 @@ describe('actions', () => {
         }
 
         it('success', async () => {
-            store = createTestStore([[apiAtom, mockApi]])
+            store = createTestStore([[authApiAtom, mockApi]])
             const login = await store.set(loginAtom, { userName: 'name', password: 'password' })
 
             expect(login).toBeTruthy()
@@ -77,7 +77,7 @@ describe('actions', () => {
 
         it('failed login', async () => {
             mockApi.Login = vi.fn().mockRejectedValueOnce(new Error('error'))
-            store = createTestStore([[apiAtom, mockApi]])
+            store = createTestStore([[authApiAtom, mockApi]])
 
             const login = await store.set(loginAtom, { userName: 'name', password: 'password' })
 
@@ -108,7 +108,7 @@ describe('actions', () => {
         }
 
         it('get permissions', async () => {
-            store = createTestStore([[apiAtom, mockApi]])
+            store = createTestStore([[authApiAtom, mockApi]])
 
             await store.set(getPermissionsAtom)
 

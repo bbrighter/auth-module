@@ -1,11 +1,11 @@
 import { atom } from 'jotai'
-import { apiAtom, usersAtom } from './atoms'
+import { userApiAtom, usersAtom } from './atoms'
 import { User } from './types'
 
 
 
 export const getUsersAtom = atom(null, async (get, set) => {
-    const authApi = get(apiAtom)
+    const authApi = get(userApiAtom)
     if (!authApi) throw new Error('UserAPI not provided')
 
     const resp = await authApi.GetUsersForProductInstance()
@@ -14,7 +14,7 @@ export const getUsersAtom = atom(null, async (get, set) => {
 })
 
 export const inviteUserAtom = atom(null, async (get, set, { userName }: { userName: string }) => {
-    const authApi = get(apiAtom)
+    const authApi = get(userApiAtom)
     if (!authApi) throw new Error('UserAPI not provided')
     try {
         const resp = await authApi.AddUserToProductInstance(userName)
@@ -29,7 +29,7 @@ export const inviteUserAtom = atom(null, async (get, set, { userName }: { userNa
 })
 
 export const deleteUserAtom = atom(null, async (get, set, { userName }: { userName: string }) => {
-    const authApi = get(apiAtom)
+    const authApi = get(userApiAtom)
     if (!authApi) throw new Error('UserAPI not provided')
     await authApi.RemoveUserFromProductInstance(userName)
     const updatedUsers = get(usersAtom).filter(u => u.name != userName)
