@@ -1,7 +1,8 @@
 import Avatar from '@mui/material/Avatar'
+import { MouseEventHandler } from 'react'
 
 export const UserAvatar = (props: {
-    onClick: React.MouseEventHandler<HTMLDivElement>,
+    onClick: MouseEventHandler<HTMLDivElement>,
     userName: string
 }) => {
     return (

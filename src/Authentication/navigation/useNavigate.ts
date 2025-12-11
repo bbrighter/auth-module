@@ -1,15 +1,13 @@
 import { useLocation } from 'wouter'
-import { useEffect } from 'react'
-
 
 export const useNavigateLogin = () => {
     const [location, navigate] = useLocation()
 
-    useEffect(() => {
+    return () => {
         if (!location.startsWith('/login')) {
             navigate(`/login?redirectTo=${location}`)
         }
-    }, [location, navigate])
+    }
 }
 
 // // Navigates to redirectTo or the first valid piid of this product

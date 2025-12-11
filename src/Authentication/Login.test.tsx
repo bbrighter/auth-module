@@ -26,7 +26,7 @@ vi.mock('wouter', () => {
 
 describe('Login', () => {
     const mockApi = {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         Login: async (_: LoginParams) => ({ token: 'token-string' }),
         GetPermissions: async () => ({ instances: [{ piid: '22990bce-4968-46c6-bcc8-6654f8a5cf35', product: 'shopping-list' }], userId: '123', userName: 'name' } as AuthData),
     }
