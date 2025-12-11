@@ -6,27 +6,18 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  reactHooks.configs.flat.recommended,
+  tseslint.configs.recommended,
+  reactRefresh.configs.vite,
+  js.configs.recommended,
+  globalIgnores(['dist', 'coverage', '.dependency-cruiser.cjs']),
   {
     files: ['**/*.{ts,tsx}'],
-    // plugins: {
-    //   'react-hooks': reactHooks,
-    //   'typescript-eslint': tseslint,
-    // },
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      // reactHooks.configs['recommended-latest'],
-      reactRefresh.configs.vite,
-    ],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
     },
     rules: {
-      // ...js.configs.recommended,
-      // ...tseslint.configs.recommended,
-      // ...reactHooks.configs.recommended,
       'quotes': ['error', 'single'],
       'comma-dangle': ['error', 'always-multiline'],
       'object-curly-spacing': ['error', 'always'],

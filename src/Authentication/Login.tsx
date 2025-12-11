@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import { useSetAtom } from 'jotai';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import { useLocation, useSearchParams } from 'wouter';
 import { loginAtom } from './store';
 import { useActiveInstance } from './hooks/usePermissions';
@@ -17,8 +17,8 @@ export function Login() {
     const [searchParams] = useSearchParams()
     const redirectTo = searchParams.get('redirectTo')
 
-    const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => { setName(e.target.value) }
-    const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) }
+    const onNameChange = (e: ChangeEvent<HTMLInputElement>) => { setName(e.target.value) }
+    const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) }
 
     const onLogin = async () => {
         setLoginState('loading')

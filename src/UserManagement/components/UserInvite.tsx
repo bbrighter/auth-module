@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import { useSetAtom } from 'jotai'
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import Stack from '@mui/material/Stack'
 import { inviteUserAtom } from '../store'
 
@@ -22,7 +22,7 @@ export default function UserInvite() {
         }
     }
 
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUserToInvite(e.currentTarget.value)
         setStatus(undefined)
     }
