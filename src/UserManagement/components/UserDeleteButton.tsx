@@ -1,10 +1,10 @@
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useSetAtom } from 'jotai';
-import { deleteUserAtom, User } from '../store';
+import { useDeleteUser } from '../hooks/useUsers';
+import { User } from '../types';
 
 export default function UserDeleteButton(props: { user: User, currentUserName: string }) {
-    const deleteUser = useSetAtom(deleteUserAtom)
+    const deleteUser = useDeleteUser()
 
     return (
         <IconButton

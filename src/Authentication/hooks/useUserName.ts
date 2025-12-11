@@ -1,7 +1,7 @@
-import { useAtomValue } from 'jotai'
-import { usernameAtom } from '../store'
+import { useAdapter } from '../useAdapter'
 
 export const useUserName = () => {
-    const userName = useAtomValue(usernameAtom)
+    const adapter = useAdapter()
+    const [userName] = adapter.useUserName()
     return userName
 }

@@ -1,28 +1,47 @@
 import { describe, expect, it, vi } from 'vitest'
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import { UserManagement } from './UserManagement'
 import userEvent from '@testing-library/user-event';
 import { UserManagementProvider } from './UserManagementProvider';
+import { UserAPI, UserStateAdapter } from './interface';
+import { ReactNode, useState } from 'react';
 
-describe('user management', () => {
-    const mockApi = {
+
+const useMockAdapter = (apiOverrides?: Partial<UserAPI>) => {
+    const [users, setUsers] = useState([
+        { name: 'name', id: '123' },
+        { name: 'not me', id: 'ABC' },
+    ])
+    const mockApi: UserAPI = {
         AddUserToProductInstance: vi.fn().mockResolvedValue({ id: '999' }),
-        GetUsersForProductInstance: vi.fn().mockResolvedValue({ users: [{ name: 'name', id: '123' }, { name: 'not me', id: 'ABC' }] }),
+        GetUsersForProductInstance: vi.fn().mockResolvedValue({ users }),
         RemoveUserFromProductInstance: vi.fn(),
     }
 
+    const api = { ...mockApi, ...apiOverrides }
+
+    const adapter: UserStateAdapter = {
+        useApi: () => [api, vi.fn()] as const,
+        useUsers: () => [users, setUsers] as const,
+    }
+
+    return adapter
+}
+
+const TestWrapper = ({ children, apiOverrides }: { children: ReactNode, apiOverrides?: Partial<UserAPI> }) => {
+    const adapter = useMockAdapter(apiOverrides)
+    return <UserManagementProvider adapter={adapter}>{children}</UserManagementProvider>
+}
+
+describe('user management', () => {
     it('renders', async () => {
-        render(<UserManagementProvider api={mockApi}>
-            <UserManagement currentUserName='name' />
-        </UserManagementProvider>)
+        render(<TestWrapper><UserManagement currentUserName='name' /></TestWrapper>)
 
         expect(await screen.findByText('Nutzerverwaltung')).toBeInTheDocument()
     })
 
     it('delete', async () => {
-        render(<UserManagementProvider api={mockApi}>
-            <UserManagement currentUserName='name' />
-        </UserManagementProvider>)
+        render(<TestWrapper><UserManagement currentUserName='name' /></TestWrapper>)
 
         const user = await screen.findByText('not me')
         expect(user).toBeInTheDocument()
@@ -31,13 +50,13 @@ describe('user management', () => {
         expect(userDeleteButton).toBeInTheDocument()
 
         await userEvent.click(userDeleteButton)
-        expect(screen.queryByText('not me')).not.toBeInTheDocument()
+        await waitFor(() => {
+            expect(screen.queryByText('not me')).not.toBeInTheDocument()
+        })
     })
 
     it('delete myself not possible', async () => {
-        render(<UserManagementProvider api={mockApi}>
-            <UserManagement currentUserName='name' />
-        </UserManagementProvider>)
+        render(<TestWrapper><UserManagement currentUserName='name' /></TestWrapper>)
 
         const user = await screen.findByText('name')
         expect(user).toBeInTheDocument()
@@ -48,9 +67,7 @@ describe('user management', () => {
     })
 
     it('invite', async () => {
-        render(<UserManagementProvider api={mockApi}>
-            <UserManagement currentUserName='name' />
-        </UserManagementProvider>)
+        render(<TestWrapper><UserManagement currentUserName='name' /></TestWrapper>)
 
         const inviteInput = await screen.findByLabelText('Nutzer einladen')
         expect(inviteInput).toBeInTheDocument()
@@ -62,11 +79,7 @@ describe('user management', () => {
     })
 
     it('invite, but not found', async () => {
-        mockApi.AddUserToProductInstance.mockRejectedValueOnce({ status: 404 })
-
-        render(<UserManagementProvider api={mockApi}>
-            <UserManagement currentUserName='name' />
-        </UserManagementProvider>)
+        render(<TestWrapper apiOverrides={{ AddUserToProductInstance: vi.fn().mockRejectedValue({ status: 404 }) }} > <UserManagement currentUserName='name' /></TestWrapper >)
 
         const inviteInput = await screen.findByLabelText('Nutzer einladen')
         expect(inviteInput).toBeInTheDocument()

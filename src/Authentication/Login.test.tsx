@@ -1,40 +1,31 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { AuthData, LoginParams } from './interface';
+import { AuthData, AuthStateAdapter, LoginParams } from './interface';
 import { Login } from './Login';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { getDefaultStore } from 'jotai';
-import { getPermissionsAtom } from './store';
 import { AuthProvider } from './AuthProvider';
+import { ProductInstance } from './types';
 
-
-let mockLocation = '/login'
-const navigateSpy = vi.fn();
-let mockSearchParams = new URLSearchParams('redirectTo=/redirectUrl');
-
-vi.mock('wouter', () => {
-    const actual = vi.importActual('wouter')
-    return {
-        ...actual,
-        useLocation: () => [mockLocation, (to: string) => {
-            mockLocation = to
-            navigateSpy(to)
-        }],
-        useSearchParams: () => [mockSearchParams, vi.fn()],
-    }
-})
+const navigateMock = vi.fn()
 
 describe('Login', () => {
     const mockApi = {
-         
         Login: async (_: LoginParams) => ({ token: 'token-string' }),
-        GetPermissions: async () => ({ instances: [{ piid: '22990bce-4968-46c6-bcc8-6654f8a5cf35', product: 'shopping-list' }], userId: '123', userName: 'name' } as AuthData),
+        GetPermissions: async () => ({} as AuthData),
     }
+    const mockAdapter: AuthStateAdapter = {
+        useToken: () => ['token-string', vi.fn()],
+        useAuthApi: () => [mockApi, vi.fn()],
+        useUserName: () => ['user 1', vi.fn()],
+        useProductInstances: () => [[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }] as Array<ProductInstance>, vi.fn()],
+        useProductKey: () => ['shopping-list', vi.fn()],
+        useLocation: () => ['http://localhost:5137/22990bce-4968-46c6-bcc8-6654f8a5cf35/login?redirectTo=/redirectUrl', navigateMock],
+    }
+
 
 
     beforeEach(() => {
         vi.clearAllMocks()
-        mockLocation = '/login'
     })
 
     const login = async () => {
@@ -52,26 +43,23 @@ describe('Login', () => {
     }
 
     it('Login redirects to redirect url', async () => {
-        render(<AuthProvider api={mockApi} productKey='shopping-list'>
+        render(<AuthProvider adapter={mockAdapter}>
             <Login />
         </AuthProvider>)
 
         await login()
 
-        expect(navigateSpy).toHaveBeenCalledWith('/redirectUrl')
+        expect(navigateMock).toHaveBeenCalledWith('/redirectUrl')
     })
 
     it('Login redirects to piid from permissions', async () => {
-        mockSearchParams = new URLSearchParams()
-        render(<AuthProvider api={mockApi} productKey='shopping-list'>
+        mockAdapter.useLocation = () => ['http://localhost:5137/login', navigateMock]
+        render(<AuthProvider adapter={mockAdapter}>
             <Login />
         </AuthProvider>)
-        await act(async () => {
-            await getDefaultStore().set(getPermissionsAtom)
-        })
 
         await login()
 
-        expect(navigateSpy).toHaveBeenCalledWith('/22990bce-4968-46c6-bcc8-6654f8a5cf35')
+        expect(navigateMock).toHaveBeenCalledWith('/22990bce-4968-46c6-bcc8-6654f8a5cf35')
     })
 })

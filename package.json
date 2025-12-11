@@ -42,25 +42,19 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
-    "jotai": "^2.15.2",
-    "jotai-location": "^0.6.2",
     "jsdom": "^27.2.0",
     "knip": "^5.71.0",
     "react": "^19.2.1",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.1",
-    "vitest": "^4.0.15",
-    "wouter": "^3.8.1"
+    "vitest": "^4.0.15"
   },
   "peerDependencies": {
     "@emotion/react": "11.x",
     "@emotion/styled": "11.x",
     "@mui/icons-material": "7.x",
     "@mui/material": "7.x",
-    "jotai": "2.x",
-    "jotai-location": "0.x",
-    "react": "19.x",
-    "wouter": "3.x"
+    "react": "19.x"
   }
 }

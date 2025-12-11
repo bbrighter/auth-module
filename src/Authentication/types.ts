@@ -1,4 +1,4 @@
-import { AuthData } from '../interface'
+import { AuthData } from './interface'
 
 export type ProductInstance = {
     id: string

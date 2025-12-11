@@ -4,14 +4,13 @@ import ListItem from '@mui/material/ListItem'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
 import { useEffect } from 'react'
-import { useAtomValue, useSetAtom } from 'jotai'
 import UserDeleteButton from './UserDeleteButton'
-import { getUsersAtom, usersAtom } from '../store'
 import { useUserAvatar } from '../hooks/useUserAvatar'
+import { useGetUsers, useUsers } from '../hooks/useUsers'
 
 export default function UserList({ currentUserName }: { currentUserName: string }) {
-    const users = useAtomValue(usersAtom)
-    const getUsers = useSetAtom(getUsersAtom)
+    const users = useUsers()
+    const getUsers = useGetUsers()
     const props = useUserAvatar
 
     useEffect(() => {
