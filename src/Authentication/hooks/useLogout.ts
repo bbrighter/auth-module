@@ -1,14 +1,13 @@
-import { useNavigateLogin } from '../navigation/useNavigate'
+import { useNavigateLogin } from '../navigation'
 import { useAdapter } from '../useAdapter'
 
 export const useLogout = () => {
     const adapter = useAdapter()
     const navigateLogin = useNavigateLogin()
+    const [, setToken] = adapter.useToken()
+    const [, setUserName] = adapter.useUserName()
 
     return () => {
-        const [, setToken] = adapter.useToken()
-        const [, setUserName] = adapter.useUserName()
-
         setToken('')
         setUserName('')
         navigateLogin()

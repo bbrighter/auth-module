@@ -14,12 +14,13 @@ interface UserResponse {
 }
 
 export interface UserAPI {
-    AddUserToProductInstance(_name: string): Promise<UUIDResponse>
-    GetUsersForProductInstance(): Promise<UserListResponse>
-    RemoveUserFromProductInstance(_name: string): Promise<void>
+    AddUserToProductInstance(_piid: string, _name: string): Promise<UUIDResponse>
+    GetUsersForProductInstance(_piid: string): Promise<UserListResponse>
+    RemoveUserFromProductInstance(_piid: string, _name: string): Promise<void>
 }
 
 export interface UserStateAdapter {
     useUsers(): [Array<User>, (_: Array<User>) => void]
-    useApi(): [UserAPI | null, (_: UserAPI) => void]
+    useApi(): UserAPI | null
+    usePiid(): string
 }

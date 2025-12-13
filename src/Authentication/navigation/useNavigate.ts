@@ -1,4 +1,4 @@
-import { useActiveInstance } from '../hooks'
+import { ProductInstance } from '../interface'
 import { useAdapter } from '../useAdapter'
 
 export const useNavigateLogin = () => {
@@ -6,7 +6,7 @@ export const useNavigateLogin = () => {
     const [location, navigate] = adapter.useLocation()
 
     return () => {
-        if (!location.startsWith('/login')) {
+        if (!location.includes('/login')) {
             navigate(`/login?redirectTo=${location}`)
         }
     }
@@ -15,11 +15,10 @@ export const useNavigateLogin = () => {
 export const useNavigate = () => {
     const adapter = useAdapter()
     const [location, navigate] = adapter.useLocation()
-    const activeInstance = useActiveInstance()
 
-
-    return () => {
-        const url = new URL(location)
+    return (activeInstance: ProductInstance | undefined) => {
+        if (!location) return
+        const url = new URL(location, window.location.origin)
         const redirectTo = url.searchParams.get('redirectTo')
         if (redirectTo) {
             navigate(redirectTo)

@@ -10,8 +10,9 @@ export function Login() {
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
     const login = useLogin()
-    const navigate = useNavigate()
     const activeInstance = useActiveInstance()
+    const navigate = useNavigate()
+
 
     const [loginState, setLoginState] = useState<'default' | 'error' | 'loading' | 'success'>('default')
 
@@ -31,7 +32,7 @@ export function Login() {
 
     useEffect(() => {
         if (loginState != 'success') return
-        navigate()
+        navigate(activeInstance)
     }, [activeInstance, navigate, loginState])
 
     return (<Container sx={{ padding: '2rem', display: 'flex', flexDirection: 'column', rowGap: '1rem', width: '20rem' }}>

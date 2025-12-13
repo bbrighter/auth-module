@@ -1,21 +1,21 @@
 
-import { respToProductInstances } from '../types'
+import { respToProductInstances } from '../interface'
 import { useAdapter } from '../useAdapter'
 
 export const useGetPermissions = () => {
     const adapter = useAdapter()
+    const [api] = adapter.useAuthApi()
+    const [, setInstances] = adapter.useProductInstances()
+    const [, setUserName] = adapter.useUserName()
 
     return async () => {
-        const [api] = adapter.useAuthApi()
         if (!api) return
         const resp = await api.GetPermissions()
 
         const instances = respToProductInstances(resp)
-        const [, setInstances] = adapter.useProductInstances()
         setInstances(instances)
 
         const userName = resp.userName
-        const [, setUserName] = adapter.useUserName()
         setUserName(userName)
     }
 }
@@ -32,8 +32,8 @@ export const useActiveInstance = () => {
     const [location] = adapter.useLocation()
     const [product] = adapter.useProductKey()
 
-    const url = new URL(location)
-    const urlId = url.pathname?.split('/')[1]
+    if (!location) return
+    const urlId = location.split('/')[1]
     const urlPiid = urlId && isGuid(urlId) ? urlId : undefined
 
     if (urlPiid) {

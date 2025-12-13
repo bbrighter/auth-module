@@ -21,8 +21,9 @@ const useMockAdapter = (apiOverrides?: Partial<UserAPI>) => {
     const api = { ...mockApi, ...apiOverrides }
 
     const adapter: UserStateAdapter = {
-        useApi: () => [api, vi.fn()] as const,
+        useApi: () => api,
         useUsers: () => [users, setUsers] as const,
+        usePiid: vi.fn(),
     }
 
     return adapter
