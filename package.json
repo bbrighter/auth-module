@@ -22,10 +22,6 @@
       "types": "./dist/users.d.ts",
       "import": "./dist/users.js"
     },
-    "./user-management": {
-      "types": "./dist/user-management.d.ts",
-      "import": "./dist/user-management.js"
-    },
     "./avatar": {
       "types": "./dist/avatar.d.ts",
       "import": "./dist/avatar.js"

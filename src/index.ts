@@ -1,4 +1,3 @@
-export * from './UserManagement'
 export * from './auth'
 export * from './Login'
 export * from './Avatar'
