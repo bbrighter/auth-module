@@ -1,13 +1,10 @@
-import { useSetAtom } from 'jotai';
-import { UserAPI } from './interface';
-import { userApiAtom } from './store';
+import { UserStateAdapter } from './interface';
 import { ReactNode } from 'react';
+import { AdapterContext } from './useAdapter';
 
-export const UserManagementProvider = ({ api, children }: { api: UserAPI, children: ReactNode }) => {
-    const setUserApi = useSetAtom(userApiAtom)
-    setUserApi(api)
+export const UserManagementProvider = ({ adapter, children }: { adapter: UserStateAdapter, children: ReactNode }) => {
 
-    return <>{children}</>;
+    return <AdapterContext.Provider value={adapter}>{children}</AdapterContext.Provider>;
 
 
 }

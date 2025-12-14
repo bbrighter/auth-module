@@ -1,13 +1,6 @@
-import { getDefaultStore } from 'jotai'
-import { piidAtom } from '../store'
-import { useAtomValue } from 'jotai';
-
-export const piid = () => {
-    return getDefaultStore().get(piidAtom)
-}
-
+import { useActiveInstance } from '../hooks';
 
 export const usePiid = () => {
-    const piid = useAtomValue(piidAtom)
-    return piid
+    const instance = useActiveInstance()
+    return instance?.id
 }

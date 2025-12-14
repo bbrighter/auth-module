@@ -1,13 +1,9 @@
 import { ReactNode } from 'react';
-import { useSetAtom } from 'jotai';
-import { AuthApi } from './interface';
-import { authApiAtom, ProductKey, productKeyAtom } from './store';
+import { AuthStateAdapter } from './interface';
+import { AdapterContext } from './useAdapter';
 
-export function AuthProvider({ api, productKey, children }: { api: AuthApi, productKey: ProductKey, children: ReactNode }) {
-    const setApi = useSetAtom(authApiAtom);
-    const setProductKey = useSetAtom(productKeyAtom)
-    setApi(api)
-    setProductKey(productKey)
+export function AuthProvider({ adapter, children }: { adapter: AuthStateAdapter, children: ReactNode }) {
 
-    return <>{children}</>;
+    return <AdapterContext.Provider value={adapter}>{children}</AdapterContext.Provider>;
 }
+

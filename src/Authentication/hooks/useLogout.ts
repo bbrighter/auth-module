@@ -1,13 +1,16 @@
-import { useSetAtom } from 'jotai'
-import { logoutAtom } from '../store'
-import { useNavigateLogin } from '../navigation/useNavigate'
+import { useNavigateLogin } from '../navigation'
+import { useAdapter } from '../useAdapter'
 
 export const useLogout = () => {
-    const logout = useSetAtom(logoutAtom)
+    const adapter = useAdapter()
     const navigateLogin = useNavigateLogin()
+    const [, setToken] = adapter.useToken()
+    const [, setUserName] = adapter.useUserName()
 
     return () => {
-        logout()
+        setToken('')
+        setUserName('')
         navigateLogin()
     }
+
 }

@@ -1,30 +1,32 @@
-import { useLocation } from 'wouter'
+import { ProductInstance } from '../interface'
+import { useAdapter } from '../useAdapter'
 
 export const useNavigateLogin = () => {
-    const [location, navigate] = useLocation()
+    const adapter = useAdapter()
+    const [location, navigate] = adapter.useLocation()
 
     return () => {
-        if (!location.startsWith('/login')) {
+        if (!location.includes('/login')) {
             navigate(`/login?redirectTo=${location}`)
         }
     }
 }
 
-// // Navigates to redirectTo or the first valid piid of this product
-// export const useNavigateAfterLogin = (productKey: ProductKey) => {
-//     const [, navigate] = useLocation()
-//     const [searchParams] = useSearchParams()
+export const useNavigate = () => {
+    const adapter = useAdapter()
+    const [location, navigate] = adapter.useLocation()
 
-//     const redirectTo = searchParams.get('redirectTo')
-//     if (redirectTo) {
-//         const redirectUrl = redirectTo.startsWith('/') ? redirectTo : '/' + redirectTo
-//         navigate(redirectUrl)
-//         return
-//     }
-
-//     const instance = useActiveInstance(productKey)
-//     if (instance) {
-//         navigate(instance.id)
-//         return
-//     }
-// }
+    return (activeInstance: ProductInstance | undefined) => {
+        if (!location) return
+        const url = new URL(location, window.location.origin)
+        const redirectTo = url.searchParams.get('redirectTo')
+        if (redirectTo) {
+            navigate(redirectTo)
+            return
+        }
+        if (activeInstance && activeInstance.id) {
+            navigate('/' + activeInstance.id)
+            return
+        }
+    }
+}

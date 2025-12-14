@@ -1,12 +1,11 @@
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import { useSetAtom } from 'jotai'
 import { ChangeEvent, useState } from 'react'
 import Stack from '@mui/material/Stack'
-import { inviteUserAtom } from '../store'
+import { useInviteUser } from '../hooks/useUsers'
 
 export default function UserInvite() {
-    const inviteUser = useSetAtom(inviteUserAtom)
+    const inviteUser = useInviteUser()
 
     const [userToInvite, setUserToInvite] = useState('')
     const [inviteLoading, setInviteLoading] = useState(false)

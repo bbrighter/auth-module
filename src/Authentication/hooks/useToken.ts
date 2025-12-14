@@ -1,7 +1,7 @@
-import { useAtomValue } from 'jotai'
-import { tokenAtom } from '../store'
+import { useAdapter } from '../useAdapter'
 
 export const useToken = () => {
-    const token = useAtomValue(tokenAtom)
+    const adapter = useAdapter()
+    const [token] = adapter.useToken()
     return token
 }

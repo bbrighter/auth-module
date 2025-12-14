@@ -1,42 +1,13 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { AuthData, LoginParams } from './interface';
+import { describe, expect, it, vi } from 'vitest';
 import { Login } from './Login';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { getDefaultStore } from 'jotai';
-import { getPermissionsAtom } from './store';
 import { AuthProvider } from './AuthProvider';
+import { createMockAdapter, mockLogin, mockNavigate } from './__test__/mockAdapter';
 
 
-let mockLocation = '/login'
-const navigateSpy = vi.fn();
-let mockSearchParams = new URLSearchParams('redirectTo=/redirectUrl');
-
-vi.mock('wouter', () => {
-    const actual = vi.importActual('wouter')
-    return {
-        ...actual,
-        useLocation: () => [mockLocation, (to: string) => {
-            mockLocation = to
-            navigateSpy(to)
-        }],
-        useSearchParams: () => [mockSearchParams, vi.fn()],
-    }
-})
 
 describe('Login', () => {
-    const mockApi = {
-         
-        Login: async (_: LoginParams) => ({ token: 'token-string' }),
-        GetPermissions: async () => ({ instances: [{ piid: '22990bce-4968-46c6-bcc8-6654f8a5cf35', product: 'shopping-list' }], userId: '123', userName: 'name' } as AuthData),
-    }
-
-
-    beforeEach(() => {
-        vi.clearAllMocks()
-        mockLocation = '/login'
-    })
-
     const login = async () => {
         const nameInput = screen.getByLabelText('Name')
         expect(nameInput).toBeInTheDocument()
@@ -52,26 +23,45 @@ describe('Login', () => {
     }
 
     it('Login redirects to redirect url', async () => {
-        render(<AuthProvider api={mockApi} productKey='shopping-list'>
+        mockLogin.mockResolvedValueOnce({ token: '123' })
+        const mockAdapter = createMockAdapter({ useLocation: () => ['http://localhost:5137/22990bce-4968-46c6-bcc8-6654f8a5cf35/login?redirectTo=/redirectUrl', mockNavigate] })
+
+        render(<AuthProvider adapter={mockAdapter}>
             <Login />
         </AuthProvider>)
 
         await login()
 
-        expect(navigateSpy).toHaveBeenCalledWith('/redirectUrl')
+        expect(mockNavigate).toHaveBeenCalledWith('/redirectUrl')
     })
 
     it('Login redirects to piid from permissions', async () => {
-        mockSearchParams = new URLSearchParams()
-        render(<AuthProvider api={mockApi} productKey='shopping-list'>
+        mockLogin.mockResolvedValueOnce({ token: '123' })
+        const mockAdapter = createMockAdapter({
+            useLocation: () => ['http://localhost:5137/login', mockNavigate],
+            useProductInstances: () => [[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], vi.fn()],
+        })
+        render(<AuthProvider adapter={mockAdapter}>
             <Login />
         </AuthProvider>)
-        await act(async () => {
-            await getDefaultStore().set(getPermissionsAtom)
-        })
 
         await login()
 
-        expect(navigateSpy).toHaveBeenCalledWith('/22990bce-4968-46c6-bcc8-6654f8a5cf35')
+        expect(mockNavigate).toHaveBeenCalledWith('/22990bce-4968-46c6-bcc8-6654f8a5cf35')
+    })
+
+    it('Login fails', async () => {
+        mockLogin.mockRejectedValue({ status: 401 })
+        const mockAdapter = createMockAdapter({
+            useLocation: () => ['http://localhost:5137/login', mockNavigate],
+            useProductInstances: () => [[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], vi.fn()],
+        })
+        render(<AuthProvider adapter={mockAdapter}>
+            <Login />
+        </AuthProvider>)
+
+        await login()
+
+        expect(mockNavigate).not.toHaveBeenCalled()
     })
 })
