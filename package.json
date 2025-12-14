@@ -9,6 +9,28 @@
   "publishConfig": {
     "access": "public"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./authentication": {
+      "types": "./dist/authentication.d.ts",
+      "import": "./dist/authentication.js",
+      "require": "./dist/authentication.cjs"
+    },
+    "./user-management": {
+      "types": "./dist/user-management.d.ts",
+      "import": "./dist/user-management.js",
+      "require": "./dist/user-management.cjs"
+    },
+    "./user": {
+      "types": "./dist/user.d.ts",
+      "import": "./dist/user.js",
+      "require": "./dist/user.cjs"
+    }
+  },
   "scripts": {
     "build": "tsup",
     "build:pack": "tsup && pnpm pack",
