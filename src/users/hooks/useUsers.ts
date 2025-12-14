@@ -1,4 +1,4 @@
-import { User } from '../types'
+import { User } from '../interface'
 import { useAdapter } from '../useAdapter'
 
 export const useUsers = () => {

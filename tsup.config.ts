@@ -3,11 +3,13 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
     entry: {
         index: 'src/index.ts',
-        authentication: 'src/Authentication/index.ts',
-        'user-management': 'src/UserManagement/index.ts',
-        user: 'src/User/index.ts',
+        auth: 'src/auth/index.ts',
+        users: 'src/users/index.ts',
+        login: 'src/Login/index.ts',
+        avatar: 'src/Avatar/index.ts',
+        'app-bar': 'src/AppBar/index.ts',
     },
-    format: ['esm', 'cjs'],
+    format: ['esm'],
     dts: true,
     sourcemap: true,
     clean: true,

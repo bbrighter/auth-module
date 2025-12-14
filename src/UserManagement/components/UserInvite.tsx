@@ -2,10 +2,10 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import { ChangeEvent, useState } from 'react'
 import Stack from '@mui/material/Stack'
-import { useInviteUser } from '../hooks/useUsers'
+import { useUserMgmt } from '../../users'
 
 export default function UserInvite() {
-    const inviteUser = useInviteUser()
+    const { inviteUser } = useUserMgmt()
 
     const [userToInvite, setUserToInvite] = useState('')
     const [inviteLoading, setInviteLoading] = useState(false)

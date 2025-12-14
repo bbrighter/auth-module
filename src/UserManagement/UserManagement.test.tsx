@@ -2,9 +2,10 @@ import { describe, expect, it, vi } from 'vitest'
 import { render, screen, waitFor, within } from '@testing-library/react'
 import { UserManagement } from './UserManagement'
 import userEvent from '@testing-library/user-event';
-import { UserManagementProvider } from './UserManagementProvider';
-import { UserAPI, UserStateAdapter } from './interface';
+
 import { ReactNode, useState } from 'react';
+import { UserAPI, UserStateAdapter } from '../users/interface';
+import { UserManagementProvider } from '../users/UserManagementProvider';
 
 
 const useMockAdapter = (apiOverrides?: Partial<UserAPI>) => {

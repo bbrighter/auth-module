@@ -5,16 +5,13 @@ import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
 import { useEffect } from 'react'
 import UserDeleteButton from './UserDeleteButton'
-import { useUserAvatar } from '../hooks/useUserAvatar'
-import { useGetUsers, useUsers } from '../hooks/useUsers'
+import { useUserMgmt } from '../../users'
 
 export default function UserList({ currentUserName }: { currentUserName: string }) {
-    const users = useUsers()
-    const getUsers = useGetUsers()
-    const props = useUserAvatar
+    const { users, setUsers, avatarProps } = useUserMgmt()
 
     useEffect(() => {
-        getUsers()
+        setUsers()
     }, [])
 
 
@@ -22,9 +19,9 @@ export default function UserList({ currentUserName }: { currentUserName: string 
         <List sx={{ pt: '1rem', pb: '1rem' }}>
             {users.map(u => (
                 <ListItem key={u.id}
-                    secondaryAction={<UserDeleteButton user={u} currentUserName={currentUserName} />}
+                    secondaryAction={<UserDeleteButton userName={u.name} currentUserName={currentUserName} />}
                 >
-                    <ListItemAvatar sx={{ pr: '1rem' }}><Avatar {...props(u.name)} /></ListItemAvatar>
+                    <ListItemAvatar sx={{ pr: '1rem' }}><Avatar {...avatarProps(u.name)} /></ListItemAvatar>
                     <ListItemText primary={u.name} />
                 </ListItem>
             ))

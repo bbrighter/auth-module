@@ -2,16 +2,13 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState, ChangeEvent } from 'react';
-import { useActiveInstance } from './hooks/usePermissions';
-import { useLogin } from './hooks/useLogin';
-import { useNavigate } from './navigation';
+import { useAuth } from '../auth';
+
 
 export function Login() {
+    const { login, navigate, activeInstance } = useAuth()
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
-    const login = useLogin()
-    const activeInstance = useActiveInstance()
-    const navigate = useNavigate()
 
 
     const [loginState, setLoginState] = useState<'default' | 'error' | 'loading' | 'success'>('default')

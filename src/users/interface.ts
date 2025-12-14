@@ -1,5 +1,3 @@
-import { User } from './types'
-
 interface UUIDResponse {
     id: string
 }
@@ -23,4 +21,9 @@ export interface UserStateAdapter {
     useUsers(): [Array<User>, (_: Array<User>) => void]
     useApi(): UserAPI | null
     usePiid(): string
+}
+
+export type User = {
+    id: string
+    name: string
 }

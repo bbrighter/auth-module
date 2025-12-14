@@ -12,23 +12,27 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js"
     },
-    "./authentication": {
-      "types": "./dist/authentication.d.ts",
-      "import": "./dist/authentication.js",
-      "require": "./dist/authentication.cjs"
+    "./auth": {
+      "types": "./dist/auth.d.ts",
+      "import": "./dist/auth.js"
     },
-    "./user-management": {
-      "types": "./dist/user-management.d.ts",
-      "import": "./dist/user-management.js",
-      "require": "./dist/user-management.cjs"
+    "./users": {
+      "types": "./dist/users.d.ts",
+      "import": "./dist/users.js"
     },
-    "./user": {
-      "types": "./dist/user.d.ts",
-      "import": "./dist/user.js",
-      "require": "./dist/user.cjs"
+    "./avatar": {
+      "types": "./dist/avatar.d.ts",
+      "import": "./dist/avatar.js"
+    },
+    "./login": {
+      "types": "./dist/login.d.ts",
+      "import": "./dist/login.js"
+    },
+    "./app-bar": {
+      "types": "./dist/app-bar.d.ts",
+      "import": "./dist/app-bar.js"
     }
   },
   "scripts": {

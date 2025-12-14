@@ -2,8 +2,9 @@ import { describe, expect, it, vi } from 'vitest';
 import { Login } from './Login';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AuthProvider } from './AuthProvider';
-import { createMockAdapter, mockLogin, mockNavigate } from './__test__/mockAdapter';
+import { AuthProvider } from '../auth';
+import { createMockAuthAdapter, mockLogin, mockNavigate } from '../auth/__test__/mockAdapter';
+
 
 
 
@@ -24,7 +25,7 @@ describe('Login', () => {
 
     it('Login redirects to redirect url', async () => {
         mockLogin.mockResolvedValueOnce({ token: '123' })
-        const mockAdapter = createMockAdapter({ useLocation: () => ['http://localhost:5137/22990bce-4968-46c6-bcc8-6654f8a5cf35/login?redirectTo=/redirectUrl', mockNavigate] })
+        const mockAdapter = createMockAuthAdapter({ useLocation: () => ['http://localhost:5137/22990bce-4968-46c6-bcc8-6654f8a5cf35/login?redirectTo=/redirectUrl', mockNavigate] })
 
         render(<AuthProvider adapter={mockAdapter}>
             <Login />
@@ -37,7 +38,7 @@ describe('Login', () => {
 
     it('Login redirects to piid from permissions', async () => {
         mockLogin.mockResolvedValueOnce({ token: '123' })
-        const mockAdapter = createMockAdapter({
+        const mockAdapter = createMockAuthAdapter({
             useLocation: () => ['http://localhost:5137/login', mockNavigate],
             useProductInstances: () => [[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], vi.fn()],
         })
@@ -52,7 +53,7 @@ describe('Login', () => {
 
     it('Login fails', async () => {
         mockLogin.mockRejectedValue({ status: 401 })
-        const mockAdapter = createMockAdapter({
+        const mockAdapter = createMockAuthAdapter({
             useLocation: () => ['http://localhost:5137/login', mockNavigate],
             useProductInstances: () => [[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], vi.fn()],
         })

@@ -1,15 +1,14 @@
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useDeleteUser } from '../hooks/useUsers';
-import { User } from '../types';
+import { useUserMgmt } from '../../users';
 
-export default function UserDeleteButton(props: { user: User, currentUserName: string }) {
-    const deleteUser = useDeleteUser()
+export default function UserDeleteButton(props: { userName: string, currentUserName: string }) {
+    const { deleteUser } = useUserMgmt()
 
     return (
         <IconButton
-            onClick={() => deleteUser({ userName: props.user.name })}
-            disabled={props.user.name == props.currentUserName}
+            onClick={() => deleteUser({ userName: props.userName })}
+            disabled={props.userName == props.currentUserName}
             data-testid='deleteUser'
         >
             <DeleteIcon />
