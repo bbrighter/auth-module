@@ -15,7 +15,7 @@ const createMockAuthApi = (overrides?: Partial<AuthApi>): AuthApi => ({
 })
 
 
-export const createMockAdapter = (overrides?: Partial<AuthStateAdapter>): AuthStateAdapter => ({
+export const createMockAuthAdapter = (overrides?: Partial<AuthStateAdapter>): AuthStateAdapter => ({
     useToken: () => ['123', mockSetToken],
     useAuthApi: () => [createMockAuthApi(), vi.fn()],
     useUserName: () => ['user 1', mockSetUserName],

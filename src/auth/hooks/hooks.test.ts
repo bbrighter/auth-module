@@ -1,5 +1,5 @@
 import { describe, expect, it, Mock, test, vi } from 'vitest';
-import { createMockAdapter, mockGetPermissions, mockLogin, mockNavigate, mockSetInstances, mockSetToken, mockSetUserName } from '../__test__/mockAdapter';
+import { createMockAuthAdapter, mockGetPermissions, mockLogin, mockNavigate, mockSetInstances, mockSetToken, mockSetUserName } from '../__test__/mockAdapter';
 
 vi.mock('../useAdapter')
 import { renderHook } from '@testing-library/react';
@@ -12,7 +12,7 @@ import { useActiveInstance, useGetPermissions } from './usePermissions';
 describe('useLogin', () => {
     it('Login', async () => {
         mockLogin.mockResolvedValue({ token: '12345' })
-        const mockAdapter = createMockAdapter()
+        const mockAdapter = createMockAuthAdapter()
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
 
         const { result } = renderHook(() => useLogin())
@@ -25,7 +25,7 @@ describe('useLogin', () => {
 
     it('Login fails', async () => {
         mockLogin.mockRejectedValue({ status: 401 })
-        const mockAdapter = createMockAdapter()
+        const mockAdapter = createMockAuthAdapter()
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
 
 
@@ -40,7 +40,7 @@ describe('useLogin', () => {
 
 describe('useLogout', () => {
     it('coming from URL', () => {
-        const mockAdapter = createMockAdapter({
+        const mockAdapter = createMockAuthAdapter({
             useLocation: () => ['http://localhost:123/abc', mockNavigate],
         })
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
@@ -58,7 +58,7 @@ describe('useLogout', () => {
 
 test('useGetPermissions', async () => {
     mockGetPermissions.mockResolvedValue({ instances: [{ piid: '123', product: 'shopping-list', appMapping: {} }], userName: 'user 1', userId: '123' })
-    const mockAdapter = createMockAdapter({
+    const mockAdapter = createMockAuthAdapter({
 
     })
         ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
@@ -73,7 +73,7 @@ test('useGetPermissions', async () => {
 
 describe('useActiveInstance', () => {
     it('only one instance', () => {
-        const mockAdapter = createMockAdapter({
+        const mockAdapter = createMockAuthAdapter({
             useProductInstances: () => [[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], mockSetInstances],
             useProductKey: () => ['shopping-list', vi.fn()],
             useLocation: () => ['/22990bce-4968-46c6-bcc8-6654f8a5cf35', mockNavigate],
@@ -87,7 +87,7 @@ describe('useActiveInstance', () => {
     })
 
     it('multiple instances, only one id in url', () => {
-        const mockAdapter = createMockAdapter({
+        const mockAdapter = createMockAuthAdapter({
             useProductInstances: () => [[
                 { id: 'b1ee8974-85cf-4952-bed9-672a84318e5b', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
                 { id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
@@ -104,7 +104,7 @@ describe('useActiveInstance', () => {
     })
 
     it('no instance in URL, take first', () => {
-        const mockAdapter = createMockAdapter({
+        const mockAdapter = createMockAuthAdapter({
             useProductInstances: () => [[
                 { id: 'b1ee8974-85cf-4952-bed9-672a84318e5b', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
                 { id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
@@ -121,7 +121,7 @@ describe('useActiveInstance', () => {
     })
 
     it('no instance in URL, take fitting product', () => {
-        const mockAdapter = createMockAdapter({
+        const mockAdapter = createMockAuthAdapter({
             useProductInstances: () => [[
                 { id: 'b1ee8974-85cf-4952-bed9-672a84318e5b', productId: 'hista-complete', productName: 'Hista', url: '' },
                 { id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
