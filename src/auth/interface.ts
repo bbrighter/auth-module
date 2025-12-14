@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-
-
 export type LoginParams = {
     userName: string
     password: string

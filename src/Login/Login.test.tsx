@@ -2,8 +2,9 @@ import { describe, expect, it, vi } from 'vitest';
 import { Login } from './Login';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AuthProvider } from './AuthProvider';
-import { createMockAdapter, mockLogin, mockNavigate } from './__test__/mockAdapter';
+import { AuthProvider } from '../auth';
+import { createMockAdapter, mockLogin, mockNavigate } from '../auth/__test__/mockAdapter';
+
 
 
 

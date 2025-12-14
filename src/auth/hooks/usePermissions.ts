@@ -46,3 +46,8 @@ const isGuid = (testString: string | undefined): boolean => {
     const guidRegex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
     return testString != undefined && guidRegex.test(testString)
 }
+
+export const usePiid = () => {
+    const instance = useActiveInstance()
+    return instance?.id
+}
