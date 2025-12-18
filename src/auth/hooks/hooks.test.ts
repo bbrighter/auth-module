@@ -75,7 +75,7 @@ describe('useActiveInstance', () => {
     it('only one instance', () => {
         const mockAdapter = createMockAuthAdapter({
             useProductInstances: () => [[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], mockSetInstances],
-            useProductKey: () => ['shopping-list', vi.fn()],
+            useProductKey: () => 'shopping-list',
             useLocation: () => ['/22990bce-4968-46c6-bcc8-6654f8a5cf35', mockNavigate],
 
         })
@@ -92,7 +92,7 @@ describe('useActiveInstance', () => {
                 { id: 'b1ee8974-85cf-4952-bed9-672a84318e5b', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
                 { id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
             ], mockSetInstances],
-            useProductKey: () => ['shopping-list', vi.fn()],
+            useProductKey: () => 'shopping-list',
             useLocation: () => ['/22990bce-4968-46c6-bcc8-6654f8a5cf35', mockNavigate],
 
         })
@@ -109,7 +109,7 @@ describe('useActiveInstance', () => {
                 { id: 'b1ee8974-85cf-4952-bed9-672a84318e5b', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
                 { id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
             ], mockSetInstances],
-            useProductKey: () => ['shopping-list', vi.fn()],
+            useProductKey: () => 'shopping-list',
             useLocation: () => ['/login', mockNavigate],
 
         })
@@ -126,7 +126,7 @@ describe('useActiveInstance', () => {
                 { id: 'b1ee8974-85cf-4952-bed9-672a84318e5b', productId: 'hista-complete', productName: 'Hista', url: '' },
                 { id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
             ], mockSetInstances],
-            useProductKey: () => ['shopping-list', vi.fn()],
+            useProductKey: () => 'shopping-list',
             useLocation: () => ['/login', mockNavigate],
 
         })
