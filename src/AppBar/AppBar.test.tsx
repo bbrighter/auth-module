@@ -2,32 +2,39 @@ import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { CustomAppBar } from './AppBar';
 import userEvent from '@testing-library/user-event';
-import { ProductInstance } from '../auth';
+import { useAuth } from '../auth';
 
 const mockLogout = vi.fn()
 
+const defaultMockUseAuth: ReturnType<typeof useAuth> = {
+    userName: 'user 1',
+    logout: mockLogout,
+    token: 'token',
+    permissions: [
+        { id: '123', productId: 'shopping-list', productName: 'Einkaufsliste', url: 'url1' },
+        { id: 'ABC', productId: 'hista-complete', productName: 'Hista', url: 'url2' },
+    ],
+    activeInstance: { id: '1', productId: '', productName: '', url: '' },
+    login: vi.fn(),
+    navigate: vi.fn(),
+    piid: '',
+    setPermissions: vi.fn(),
+}
+
+vi.mock('../auth', () => ({ useAuth: vi.fn() }))
+
+vi.mock('../users', () => ({
+    useUserMgmt: () => ({
+        users: [{ id: '1', name: 'name' }],
+        avatarProps: vi.fn(),
+        setUsers: vi.fn(),
+    }),
+}))
+
 describe('app bar', () => {
-
-    vi.mock('../auth', () => ({
-        useAuth: () => ({
-            userName: 'user 1',
-            logout: mockLogout,
-            permissions: [
-                { id: '123', productId: 'shopping-list', productName: 'Einkaufsliste', url: 'url1' },
-                { id: 'ABC', productId: 'hista-complete', productName: 'Hista', url: 'url2' },
-            ] satisfies ProductInstance[],
-        }),
-    }))
-    vi.mock('../users', () => ({
-        useUserMgmt: () => ({
-            users: [{ id: '1', name: 'name' }],
-            avatarProps: vi.fn(),
-            setUsers: vi.fn(),
-        }),
-    }))
-
     beforeEach(() => {
-        vi.resetAllMocks()
+        vi.mocked(useAuth).mockReturnValue(defaultMockUseAuth)
+        // vi.clearAllMocks()
     })
 
 
@@ -40,17 +47,36 @@ describe('app bar', () => {
         expect(screen.getByText('Einkaufsliste')).toBeInTheDocument()
     })
 
-    it('logout', async () => {
-        render(<CustomAppBar />)
+    describe('logout', () => {
+        it('ok', async () => {
+            render(<CustomAppBar />)
 
-        const avatarMenu = await screen.findByText('U1')
-        expect(avatarMenu).toBeInTheDocument()
-        await userEvent.click(avatarMenu)
+            const avatarMenu = await screen.findByText('U1')
+            expect(avatarMenu).toBeInTheDocument()
+            await userEvent.click(avatarMenu)
 
-        const logoutButton = screen.getByText('Logout')
-        await userEvent.click(logoutButton)
-        expect(mockLogout).toHaveBeenCalled()
+            const logoutButton = screen.getByText('Logout')
+            await userEvent.click(logoutButton)
+            expect(mockLogout).toHaveBeenCalled()
+        })
+
+        it('no token', async () => {
+            vi.mocked(useAuth).mockReturnValue({
+                ...defaultMockUseAuth,
+                token: '',
+            })
+
+            render(<CustomAppBar />)
+
+            const avatarMenu = await screen.findByText('U1')
+            expect(avatarMenu).toBeInTheDocument()
+            await userEvent.click(avatarMenu)
+
+            const logoutButton = screen.getByText('Logout').closest('li')!
+            expect(logoutButton).toHaveAttribute('aria-disabled', 'true')
+        })
     })
+
 
     it('open user management', async () => {
         render(<CustomAppBar />)

@@ -27,20 +27,20 @@ export interface AuthApi {
 
 export interface AuthStateAdapter {
     useToken(): [string, (_: string) => void]
-    useAuthApi(): [AuthApi | null, (_: AuthApi) => void]
+    useAuthApi(): AuthApi | null
     useUserName(): [string, (_: string) => void]
     useProductInstances(): [Array<ProductInstance>, (_: Array<ProductInstance>) => void]
-    useProductKey(): [ProductKey | null, (_: ProductKey) => void]
+    useProductKey(): ProductKey | null
     useLocation(): [string, (_: string) => void]
 }
 
 
 export const defaultAdapter: AuthStateAdapter = {
     useToken: () => ['', (_: string) => console.log('not init')],
-    useAuthApi: () => [null, (_: AuthApi) => console.log('not init')],
+    useAuthApi: () => null,
     useUserName: () => ['', (_: string) => console.log('not init')],
     useProductInstances: () => [[], (_: Array<ProductInstance>) => console.log('not init')],
-    useProductKey: () => [null, (_: ProductKey) => console.log('not init')],
+    useProductKey: () => null,
     useLocation: () => ['', (_: string) => console.log('not init')],
 }
 
@@ -65,7 +65,14 @@ export const respToProductInstances = (resp: AuthData): Array<ProductInstance> =
     })
 }
 
-type ProductKey = 'shopping-list' | 'hista-complete'
+export const ProductKeys = {
+  ShoppingList: 'shopping-list',
+  HistaComplete: 'hista-complete',
+} as const;
+
+export type ProductKey = (typeof ProductKeys)[keyof typeof ProductKeys];
+
+
 
 const localOrProdUrl = (prodUrl: string) => {
     const hostname = new URL(window.location.href).host

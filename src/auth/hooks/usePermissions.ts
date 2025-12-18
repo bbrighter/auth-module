@@ -4,7 +4,7 @@ import { useAdapter } from '../useAdapter'
 
 export const useGetPermissions = () => {
     const adapter = useAdapter()
-    const [api] = adapter.useAuthApi()
+    const api = adapter.useAuthApi()
     const [, setInstances] = adapter.useProductInstances()
     const [, setUserName] = adapter.useUserName()
 
@@ -30,7 +30,7 @@ export const useActiveInstance = () => {
     const adapter = useAdapter()
     const [instances] = adapter.useProductInstances()
     const [location] = adapter.useLocation()
-    const [product] = adapter.useProductKey()
+    const product = adapter.useProductKey()
 
     if (!location) return
     const urlId = location.split('/')[1]
