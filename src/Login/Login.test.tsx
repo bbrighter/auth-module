@@ -25,7 +25,7 @@ describe('Login', () => {
 
     it('Login redirects to redirect url', async () => {
         mockLogin.mockResolvedValueOnce({ token: '123' })
-        const mockAdapter = createMockAuthAdapter({ useLocation: () => ['http://localhost:5137/22990bce-4968-46c6-bcc8-6654f8a5cf35/login?redirectTo=/redirectUrl', mockNavigate] })
+        const mockAdapter = createMockAuthAdapter({ useLocation: () => ({ location: '/22990bce-4968-46c6-bcc8-6654f8a5cf35/login?redirectTo=/redirectUrl', navigate: mockNavigate }) })
 
         render(<AuthProvider adapter={mockAdapter}>
             <Login />
@@ -39,8 +39,8 @@ describe('Login', () => {
     it('Login redirects to piid from permissions', async () => {
         mockLogin.mockResolvedValueOnce({ token: '123' })
         const mockAdapter = createMockAuthAdapter({
-            useLocation: () => ['http://localhost:5137/login', mockNavigate],
-            useProductInstances: () => [[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], vi.fn()],
+            useLocation: () => ({ location:'/login', navigate:mockNavigate }),
+            useProductInstances: () => ({ instances:[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], setInstances: vi.fn() }),
         })
         render(<AuthProvider adapter={mockAdapter}>
             <Login />
@@ -54,8 +54,8 @@ describe('Login', () => {
     it('Login fails', async () => {
         mockLogin.mockRejectedValue({ status: 401 })
         const mockAdapter = createMockAuthAdapter({
-            useLocation: () => ['http://localhost:5137/login', mockNavigate],
-            useProductInstances: () => [[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], vi.fn()],
+            useLocation: () => ({ location: '/login', navigate: mockNavigate }),
+            useProductInstances: () => ({ instances:[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], setInstances: vi.fn() }),
         })
         render(<AuthProvider adapter={mockAdapter}>
             <Login />

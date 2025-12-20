@@ -17,7 +17,7 @@ const createMockUserApi = (overrides?: Partial<UserAPI>): UserAPI => ({
 
 export const createMockAdapter = (overrides?: Partial<UserStateAdapter>): UserStateAdapter => ({
     useApi: () => createMockUserApi(),
-    useUsers: () => [[{ id: '123', name: 'user 1' }], mockSetUsers],
+    useUsers: () => ({ users: [{ id: '123', name: 'user 1' }], setUsers: mockSetUsers }),
     usePiid: () => 'ABC',
     ...overrides,
 })

@@ -26,7 +26,7 @@ describe('getUsers', () => {
 describe('useInviteUser', () => {
     it('ok', async () => {
         mockAddUserApi.mockResolvedValue({ id: '456' })
-        const mockAdapter = createMockAdapter({ useUsers: () => [[], mockSetUsers] })
+        const mockAdapter = createMockAdapter({ useUsers: () => ({ users: [], setUsers: mockSetUsers }) })
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
         const { result } = renderHook(() => useInviteUser())
 
@@ -52,7 +52,7 @@ describe('useInviteUser', () => {
 describe('useDeleteUser', () => {
     it('ok', async () => {
         const users = [{ id: '123', name: 'user 1' }, { id: '456', name: 'name' }]
-        const mockAdapter = createMockAdapter({ useUsers: () => [users, mockSetUsers] })
+        const mockAdapter = createMockAdapter({ useUsers: () => ({ users: users, setUsers: mockSetUsers }) })
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
         const { result } = renderHook(() => useDeleteUser())
 

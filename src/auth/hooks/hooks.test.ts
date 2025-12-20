@@ -17,6 +17,7 @@ describe('useLogin', () => {
 
         const { result } = renderHook(() => useLogin())
 
+        // eslint-disable-next-line sonarjs/no-hardcoded-passwords
         const ok = await result.current({ userName: 'name', password: 'pw' })
         expect(ok).toBeTruthy()
         expect(mockSetToken).toHaveBeenCalledWith('12345')
@@ -31,6 +32,7 @@ describe('useLogin', () => {
 
         const { result } = renderHook(() => useLogin())
 
+        // eslint-disable-next-line sonarjs/no-hardcoded-passwords
         const ok = await result.current({ userName: 'name', password: 'pw' })
         expect(ok).toBeFalsy()
         expect(mockSetToken).not.toHaveBeenCalled()
@@ -41,7 +43,7 @@ describe('useLogin', () => {
 describe('useLogout', () => {
     it('coming from URL', () => {
         const mockAdapter = createMockAuthAdapter({
-            useLocation: () => ['http://localhost:123/abc', mockNavigate],
+            useLocation: () => ({ location:'/abc', navigate:mockNavigate }),
         })
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
 
@@ -74,9 +76,9 @@ test('useGetPermissions', async () => {
 describe('useActiveInstance', () => {
     it('only one instance', () => {
         const mockAdapter = createMockAuthAdapter({
-            useProductInstances: () => [[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], mockSetInstances],
+            useProductInstances: () => ({ instances: [{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], setInstances: mockSetInstances }),
             useProductKey: () => 'shopping-list',
-            useLocation: () => ['/22990bce-4968-46c6-bcc8-6654f8a5cf35', mockNavigate],
+            useLocation: () => ({ location: '/22990bce-4968-46c6-bcc8-6654f8a5cf35', navigate: mockNavigate }),
 
         })
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
@@ -88,12 +90,12 @@ describe('useActiveInstance', () => {
 
     it('multiple instances, only one id in url', () => {
         const mockAdapter = createMockAuthAdapter({
-            useProductInstances: () => [[
+            useProductInstances: () => ({ instances: [
                 { id: 'b1ee8974-85cf-4952-bed9-672a84318e5b', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
                 { id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
-            ], mockSetInstances],
+            ], setInstances: mockSetInstances }),
             useProductKey: () => 'shopping-list',
-            useLocation: () => ['/22990bce-4968-46c6-bcc8-6654f8a5cf35', mockNavigate],
+            useLocation: () => ({ location:'/22990bce-4968-46c6-bcc8-6654f8a5cf35', navigate: mockNavigate }),
 
         })
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
@@ -105,12 +107,12 @@ describe('useActiveInstance', () => {
 
     it('no instance in URL, take first', () => {
         const mockAdapter = createMockAuthAdapter({
-            useProductInstances: () => [[
+            useProductInstances: () => ({ instances: [
                 { id: 'b1ee8974-85cf-4952-bed9-672a84318e5b', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
                 { id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
-            ], mockSetInstances],
+            ], setInstances: mockSetInstances }),
             useProductKey: () => 'shopping-list',
-            useLocation: () => ['/login', mockNavigate],
+            useLocation: () => ({ location: '/login', navigate: mockNavigate }),
 
         })
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
@@ -122,12 +124,12 @@ describe('useActiveInstance', () => {
 
     it('no instance in URL, take fitting product', () => {
         const mockAdapter = createMockAuthAdapter({
-            useProductInstances: () => [[
+            useProductInstances: () => ({ instances: [
                 { id: 'b1ee8974-85cf-4952-bed9-672a84318e5b', productId: 'hista-complete', productName: 'Hista', url: '' },
                 { id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
-            ], mockSetInstances],
+            ], setInstances: mockSetInstances }),
             useProductKey: () => 'shopping-list',
-            useLocation: () => ['/login', mockNavigate],
+            useLocation: () => ({ location: '/login', navigate: mockNavigate }),
 
         })
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
