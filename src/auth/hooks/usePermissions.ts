@@ -5,8 +5,8 @@ import { useAdapter } from '../useAdapter'
 export const useGetPermissions = () => {
     const adapter = useAdapter()
     const api = adapter.useAuthApi()
-    const [, setInstances] = adapter.useProductInstances()
-    const [, setUserName] = adapter.useUserName()
+    const { setInstances } = adapter.useProductInstances()
+    const { setUserName } = adapter.useUserName()
 
     return async () => {
         if (!api) return
@@ -22,14 +22,14 @@ export const useGetPermissions = () => {
 
 export const usePermissions = () => {
     const adapter = useAdapter()
-    const [instances] = adapter.useProductInstances()
+    const { instances }= adapter.useProductInstances()
     return instances
 }
 
 export const useActiveInstance = () => {
     const adapter = useAdapter()
-    const [instances] = adapter.useProductInstances()
-    const [location] = adapter.useLocation()
+    const { instances } = adapter.useProductInstances()
+    const { location } = adapter.useLocation()
     const product = adapter.useProductKey()
 
     if (!location) return

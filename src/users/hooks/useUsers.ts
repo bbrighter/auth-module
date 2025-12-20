@@ -3,7 +3,7 @@ import { useAdapter } from '../useAdapter'
 
 export const useUsers = () => {
     const adapter = useAdapter()
-    const [users] = adapter.useUsers()
+    const { users } = adapter.useUsers()
     return users
 }
 
@@ -11,7 +11,7 @@ export const useGetUsers = () => {
     const adapter = useAdapter()
     const api = adapter.useApi()
     const piid = adapter.usePiid()
-    const [, setUsers] = adapter.useUsers()
+    const { setUsers } = adapter.useUsers()
     if (!api) throw new Error('UserAPI not provided')
 
     return async () => {
@@ -25,7 +25,7 @@ export const useInviteUser = () => {
     const adapter = useAdapter()
     const api = adapter.useApi()
     const piid = adapter.usePiid()
-    const [users, setUsers] = adapter.useUsers()
+    const { users, setUsers } = adapter.useUsers()
     if (!api) throw new Error('UserAPI not provided')
 
     return async ({ userName }: { userName: string }) => {
@@ -42,7 +42,7 @@ export const useInviteUser = () => {
 
 export const useDeleteUser = () => {
     const adapter = useAdapter()
-    const [users, setUsers] = adapter.useUsers()
+    const { users, setUsers } = adapter.useUsers()
     const piid = adapter.usePiid()
     const api = adapter.useApi()
     if (!api) throw new Error('UserAPI not provided')

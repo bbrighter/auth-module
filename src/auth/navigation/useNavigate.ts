@@ -3,7 +3,7 @@ import { useAdapter } from '../useAdapter'
 
 export const useNavigateLogin = () => {
     const adapter = useAdapter()
-    const [location, navigate] = adapter.useLocation()
+    const { location, navigate } = adapter.useLocation()
 
     return () => {
         if (!location.includes('/login')) {
@@ -14,7 +14,7 @@ export const useNavigateLogin = () => {
 
 export const useNavigate = () => {
     const adapter = useAdapter()
-    const [location, navigate] = adapter.useLocation()
+    const { location, navigate } = adapter.useLocation()
 
     return (activeInstance: ProductInstance | undefined) => {
         if (!location) return
@@ -26,7 +26,6 @@ export const useNavigate = () => {
         }
         if (activeInstance && activeInstance.id) {
             navigate('/' + activeInstance.id)
-            return
         }
     }
 }

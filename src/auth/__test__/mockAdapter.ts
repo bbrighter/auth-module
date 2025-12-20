@@ -16,11 +16,11 @@ const createMockAuthApi = (overrides?: Partial<AuthApi>): AuthApi => ({
 
 
 export const createMockAuthAdapter = (overrides?: Partial<AuthStateAdapter>): AuthStateAdapter => ({
-    useToken: () => ['123', mockSetToken],
+    useToken: () => ({ token: '123', setToken: mockSetToken }),
     useAuthApi: () => createMockAuthApi(),
-    useUserName: () => ['user 1', mockSetUserName],
-    useProductInstances: () => [[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }] as Array<ProductInstance>, mockSetInstances],
+    useUserName: () => ({ userName: 'user 1', setUserName: mockSetUserName }),
+    useProductInstances: () => ({ instances: [{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }] as Array<ProductInstance>, setInstances: mockSetInstances }),
     useProductKey: () => 'shopping-list',
-    useLocation: () => ['http://localhost:5137/22990bce-4968-46c6-bcc8-6654f8a5cf35/login?redirectTo=/redirectUrl', mockNavigate],
+    useLocation: () => ({ location: '/22990bce-4968-46c6-bcc8-6654f8a5cf35/login?redirectTo=/redirectUrl', navigate: mockNavigate }),
     ...overrides,
 })

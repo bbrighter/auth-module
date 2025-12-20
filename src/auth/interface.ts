@@ -26,22 +26,22 @@ export interface AuthApi {
 }
 
 export interface AuthStateAdapter {
-    useToken(): [string, (_: string) => void]
+    useToken(): {token: string, setToken: (_: string) => void}
     useAuthApi(): AuthApi | null
-    useUserName(): [string, (_: string) => void]
-    useProductInstances(): [Array<ProductInstance>, (_: Array<ProductInstance>) => void]
+    useUserName(): {userName: string, setUserName: (_: string) => void}
+    useProductInstances(): {instances: readonly ProductInstance[], setInstances:(_: Array<ProductInstance>) => void}
     useProductKey(): ProductKey | null
-    useLocation(): [string, (_: string) => void]
+    useLocation(): {location: string, navigate:(_: string) => void}
 }
 
 
 export const defaultAdapter: AuthStateAdapter = {
-    useToken: () => ['', (_: string) => console.log('not init')],
+    useToken: () => ({ token: '', setToken: (_: string) => console.log('not init') }),
     useAuthApi: () => null,
-    useUserName: () => ['', (_: string) => console.log('not init')],
-    useProductInstances: () => [[], (_: Array<ProductInstance>) => console.log('not init')],
+    useUserName: () => ({ userName: '', setUserName: (_: string) => console.log('not init') }),
+    useProductInstances: () => ({ instances: [], setInstances: (_: Array<ProductInstance>) => console.log('not init') }),
     useProductKey: () => null,
-    useLocation: () => ['', (_: string) => console.log('not init')],
+    useLocation: () => ({ location: '', navigate: (_: string) => console.log('not init') }),
 }
 
 export type ProductInstance = {
