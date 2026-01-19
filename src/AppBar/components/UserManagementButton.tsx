@@ -1,9 +1,8 @@
+import { Box, MenuItem, Modal } from '@mui/material'
+import { useState } from 'react'
 
-import { Box, MenuItem, Modal } from '@mui/material';
-import { useState } from 'react';
-import { useAuth } from '../../auth';
-import { UserManagement } from '../../UserManagement';
-
+import { useAuth } from '../../auth'
+import { UserManagement } from '../../UserManagement'
 
 export default function UserManagementButton() {
     const [open, setOpen] = useState(false)
@@ -21,10 +20,11 @@ export default function UserManagementButton() {
                     transform: 'translate(-50%, -50%)',
                     padding: '1rem',
                     borderRadius: '0.5rem',
-                }}>
+                }}
+                >
                     <UserManagement currentUserName={userName} />
                 </Box>
-            </Modal >
+            </Modal>
         </>
     )
 }

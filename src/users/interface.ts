@@ -18,7 +18,7 @@ export interface UserAPI {
 }
 
 export interface UserStateAdapter {
-    useUsers(): {users: readonly User[], setUsers: (_: Array<User>) => void}
+    useUsers(): { users: readonly User[], setUsers: (_: Array<User>) => void }
     useApi(): UserAPI | null
     usePiid(): string
 }

@@ -1,11 +1,11 @@
-import Menu from '@mui/material/Menu';
-import { useState, MouseEvent } from 'react';
-import { LogoutMenuEntry } from './LogoutMenuEntry';
-import ProductSelection from './ProductSelection';
-import UserManagement from './UserManagementButton';
-import { useAuth } from '../../auth';
-import { UserAvatar } from '../../Avatar';
+import Menu from '@mui/material/Menu'
+import { MouseEvent, useState } from 'react'
 
+import { useAuth } from '../../auth'
+import { UserAvatar } from '../../Avatar'
+import { LogoutMenuEntry } from './LogoutMenuEntry'
+import ProductSelection from './ProductSelection'
+import UserManagement from './UserManagementButton'
 
 export function ProductMenu() {
     const [anchor, setAnchor] = useState<null | HTMLElement>(null)
@@ -13,8 +13,9 @@ export function ProductMenu() {
     const { userName } = useAuth()
 
     const handleClose = () => setAnchor(null)
-    const handleClick = (e: MouseEvent<HTMLDivElement>) => { setAnchor(e.currentTarget) }
-
+    const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+        setAnchor(e.currentTarget)
+    }
 
     return (
         <>
@@ -32,7 +33,6 @@ export function ProductMenu() {
                 <LogoutMenuEntry />
             </Menu>
         </>
-
 
     )
 }

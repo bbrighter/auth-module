@@ -1,12 +1,12 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsup'
 
 export default defineConfig({
     entry: {
-        index: 'src/index.ts',
-        auth: 'src/auth/index.ts',
-        users: 'src/users/index.ts',
-        login: 'src/Login/index.ts',
-        avatar: 'src/Avatar/index.ts',
+        'index': 'src/index.ts',
+        'auth': 'src/auth/index.ts',
+        'users': 'src/users/index.ts',
+        'login': 'src/Login/index.ts',
+        'avatar': 'src/Avatar/index.ts',
         'app-bar': 'src/AppBar/index.ts',
     },
     format: ['esm'],
@@ -21,4 +21,4 @@ export default defineConfig({
         '@emotion/react',
         '@emotion/styled',
     ],
-});
+})

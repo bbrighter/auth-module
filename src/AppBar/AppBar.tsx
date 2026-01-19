@@ -1,11 +1,12 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Box from '@mui/material/Box';
-import { ProductMenu } from './components/ProductMenu';
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+
+import { ProductMenu } from './components/ProductMenu'
 
 export const CustomAppBar = () => {
     return (
-        <AppBar position='static'>
+        <AppBar position="static">
             <Toolbar>
                 <Box sx={{ flexGrow: 1 }}>
                     <ProductMenu />

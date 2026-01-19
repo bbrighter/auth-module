@@ -1,13 +1,14 @@
-import { describe, expect, it, Mock, test, vi } from 'vitest';
-import { createMockAuthAdapter, mockGetPermissions, mockLogin, mockNavigate, mockSetInstances, mockSetToken, mockSetUserName } from '../__test__/mockAdapter';
+import { describe, expect, it, Mock, test, vi } from 'vitest'
+
+import { createMockAuthAdapter, mockGetPermissions, mockLogin, mockNavigate, mockSetInstances, mockSetIsLoaded, mockSetToken, mockSetUserName } from '../__test__/mockAdapter'
 
 vi.mock('../useAdapter')
-import { renderHook } from '@testing-library/react';
-import { useLogin } from './useLogin';
-import { useAdapter } from '../useAdapter';
-import { useLogout } from './useLogout';
-import { useActiveInstance, useGetPermissions } from './usePermissions';
+import { renderHook } from '@testing-library/react'
 
+import { useAdapter } from '../useAdapter'
+import { useLogin } from './useLogin'
+import { useLogout } from './useLogout'
+import { useActiveInstance, useGetPermissions } from './usePermissions'
 
 describe('useLogin', () => {
     it('Login', async () => {
@@ -29,7 +30,6 @@ describe('useLogin', () => {
         const mockAdapter = createMockAuthAdapter()
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
 
-
         const { result } = renderHook(() => useLogin())
 
         // eslint-disable-next-line sonarjs/no-hardcoded-passwords
@@ -43,7 +43,7 @@ describe('useLogin', () => {
 describe('useLogout', () => {
     it('coming from URL', () => {
         const mockAdapter = createMockAuthAdapter({
-            useLocation: () => ({ location:'/abc', navigate:mockNavigate }),
+            useLocation: () => ({ location: '/abc', navigate: mockNavigate }),
         })
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
 
@@ -55,7 +55,6 @@ describe('useLogout', () => {
         expect(mockSetUserName).toHaveBeenCalledWith('')
         expect(mockNavigate).toHaveBeenCalled()
     })
-
 })
 
 test('useGetPermissions', async () => {
@@ -70,13 +69,18 @@ test('useGetPermissions', async () => {
 
     expect(mockSetInstances).toHaveBeenCalledWith([{ id: '123', productId: 'shopping-list', productName: 'Einkaufsliste', selected: false, url: 'http://localhost:5173' }])
     expect(mockSetUserName).toHaveBeenCalledWith('user 1')
+    expect(mockSetIsLoaded).toHaveBeenCalledWith(true)
 })
-
 
 describe('useActiveInstance', () => {
     it('only one instance', () => {
         const mockAdapter = createMockAuthAdapter({
-            useProductInstances: () => ({ instances: [{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], setInstances: mockSetInstances }),
+            useProductInstances: () => ({
+                instances: [{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }],
+                setInstances: mockSetInstances,
+                isLoaded: true,
+                setIsLoaded: mockSetIsLoaded,
+            }),
             useProductKey: () => 'shopping-list',
             useLocation: () => ({ location: '/22990bce-4968-46c6-bcc8-6654f8a5cf35', navigate: mockNavigate }),
 
@@ -93,9 +97,9 @@ describe('useActiveInstance', () => {
             useProductInstances: () => ({ instances: [
                 { id: 'b1ee8974-85cf-4952-bed9-672a84318e5b', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
                 { id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
-            ], setInstances: mockSetInstances }),
+            ], setInstances: mockSetInstances, isLoaded: true, setIsLoaded: mockSetIsLoaded }),
             useProductKey: () => 'shopping-list',
-            useLocation: () => ({ location:'/22990bce-4968-46c6-bcc8-6654f8a5cf35', navigate: mockNavigate }),
+            useLocation: () => ({ location: '/22990bce-4968-46c6-bcc8-6654f8a5cf35', navigate: mockNavigate }),
 
         })
             ; (useAdapter as unknown as Mock).mockReturnValue(mockAdapter)
@@ -110,7 +114,7 @@ describe('useActiveInstance', () => {
             useProductInstances: () => ({ instances: [
                 { id: 'b1ee8974-85cf-4952-bed9-672a84318e5b', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
                 { id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
-            ], setInstances: mockSetInstances }),
+            ], setInstances: mockSetInstances, isLoaded: true, setIsLoaded: mockSetIsLoaded }),
             useProductKey: () => 'shopping-list',
             useLocation: () => ({ location: '/login', navigate: mockNavigate }),
 
@@ -127,7 +131,7 @@ describe('useActiveInstance', () => {
             useProductInstances: () => ({ instances: [
                 { id: 'b1ee8974-85cf-4952-bed9-672a84318e5b', productId: 'hista-complete', productName: 'Hista', url: '' },
                 { id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' },
-            ], setInstances: mockSetInstances }),
+            ], setInstances: mockSetInstances, isLoaded: true, setIsLoaded: mockSetIsLoaded }),
             useProductKey: () => 'shopping-list',
             useLocation: () => ({ location: '/login', navigate: mockNavigate }),
 

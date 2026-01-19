@@ -1,4 +1,4 @@
-export * from './useAuth'
 export * from './AuthProvider'
-export * from './interface'
 export * from './handleAuthorization'
+export * from './interface'
+export * from './useAuth'

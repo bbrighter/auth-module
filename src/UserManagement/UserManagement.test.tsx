@@ -1,12 +1,11 @@
-import { describe, expect, it, vi } from 'vitest'
 import { render, screen, waitFor, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { ReactNode, useState } from 'react'
+import { describe, expect, it, vi } from 'vitest'
+
+import { UserAPI, UserStateAdapter } from '../users/interface'
+import { UserManagementProvider } from '../users/UserManagementProvider'
 import { UserManagement } from './UserManagement'
-import userEvent from '@testing-library/user-event';
-
-import { ReactNode, useState } from 'react';
-import { UserAPI, UserStateAdapter } from '../users/interface';
-import { UserManagementProvider } from '../users/UserManagementProvider';
-
 
 const useMockAdapter = (apiOverrides?: Partial<UserAPI>) => {
     const [users, setUsers] = useState([
@@ -37,13 +36,13 @@ const TestWrapper = ({ children, apiOverrides }: { children: ReactNode, apiOverr
 
 describe('user management', () => {
     it('renders', async () => {
-        render(<TestWrapper><UserManagement currentUserName='name' /></TestWrapper>)
+        render(<TestWrapper><UserManagement currentUserName="name" /></TestWrapper>)
 
         expect(await screen.findByText('Nutzerverwaltung')).toBeInTheDocument()
     })
 
     it('delete', async () => {
-        render(<TestWrapper><UserManagement currentUserName='name' /></TestWrapper>)
+        render(<TestWrapper><UserManagement currentUserName="name" /></TestWrapper>)
 
         const user = await screen.findByText('not me')
         expect(user).toBeInTheDocument()
@@ -58,7 +57,7 @@ describe('user management', () => {
     })
 
     it('delete myself not possible', async () => {
-        render(<TestWrapper><UserManagement currentUserName='name' /></TestWrapper>)
+        render(<TestWrapper><UserManagement currentUserName="name" /></TestWrapper>)
 
         const user = await screen.findByText('name')
         expect(user).toBeInTheDocument()
@@ -69,7 +68,7 @@ describe('user management', () => {
     })
 
     it('invite', async () => {
-        render(<TestWrapper><UserManagement currentUserName='name' /></TestWrapper>)
+        render(<TestWrapper><UserManagement currentUserName="name" /></TestWrapper>)
 
         const inviteInput = await screen.findByLabelText('Nutzer einladen')
         expect(inviteInput).toBeInTheDocument()
@@ -81,7 +80,12 @@ describe('user management', () => {
     })
 
     it('invite, but not found', async () => {
-        render(<TestWrapper apiOverrides={{ AddUserToProductInstance: vi.fn().mockRejectedValue({ status: 404 }) }} > <UserManagement currentUserName='name' /></TestWrapper >)
+        render(
+            <TestWrapper apiOverrides={{ AddUserToProductInstance: vi.fn().mockRejectedValue({ status: 404 }) }}>
+                {' '}
+                <UserManagement currentUserName="name" />
+            </TestWrapper>,
+        )
 
         const inviteInput = await screen.findByLabelText('Nutzer einladen')
         expect(inviteInput).toBeInTheDocument()

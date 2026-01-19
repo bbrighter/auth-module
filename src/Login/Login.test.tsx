@@ -1,12 +1,10 @@
-import { describe, expect, it, vi } from 'vitest';
-import { Login } from './Login';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { AuthProvider } from '../auth';
-import { createMockAuthAdapter, mockLogin, mockNavigate } from '../auth/__test__/mockAdapter';
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
 
-
-
+import { AuthProvider } from '../auth'
+import { createMockAuthAdapter, mockLogin, mockNavigate } from '../auth/__test__/mockAdapter'
+import { Login } from './Login'
 
 describe('Login', () => {
     const login = async () => {
@@ -27,9 +25,11 @@ describe('Login', () => {
         mockLogin.mockResolvedValueOnce({ token: '123' })
         const mockAdapter = createMockAuthAdapter({ useLocation: () => ({ location: '/22990bce-4968-46c6-bcc8-6654f8a5cf35/login?redirectTo=/redirectUrl', navigate: mockNavigate }) })
 
-        render(<AuthProvider adapter={mockAdapter}>
-            <Login />
-        </AuthProvider>)
+        render(
+            <AuthProvider adapter={mockAdapter}>
+                <Login />
+            </AuthProvider>,
+        )
 
         await login()
 
@@ -39,12 +39,19 @@ describe('Login', () => {
     it('Login redirects to piid from permissions', async () => {
         mockLogin.mockResolvedValueOnce({ token: '123' })
         const mockAdapter = createMockAuthAdapter({
-            useLocation: () => ({ location:'/login', navigate:mockNavigate }),
-            useProductInstances: () => ({ instances:[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], setInstances: vi.fn() }),
+            useLocation: () => ({ location: '/login', navigate: mockNavigate }),
+            useProductInstances: () => ({
+                instances: [{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }],
+                setInstances: vi.fn(),
+                isLoaded: true,
+                setIsLoaded: vi.fn(),
+            }),
         })
-        render(<AuthProvider adapter={mockAdapter}>
-            <Login />
-        </AuthProvider>)
+        render(
+            <AuthProvider adapter={mockAdapter}>
+                <Login />
+            </AuthProvider>,
+        )
 
         await login()
 
@@ -55,11 +62,18 @@ describe('Login', () => {
         mockLogin.mockRejectedValue({ status: 401 })
         const mockAdapter = createMockAuthAdapter({
             useLocation: () => ({ location: '/login', navigate: mockNavigate }),
-            useProductInstances: () => ({ instances:[{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], setInstances: vi.fn() }),
+            useProductInstances: () => ({
+                instances: [{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }],
+                setInstances: vi.fn(),
+                isLoaded: true,
+                setIsLoaded: vi.fn(),
+            }),
         })
-        render(<AuthProvider adapter={mockAdapter}>
-            <Login />
-        </AuthProvider>)
+        render(
+            <AuthProvider adapter={mockAdapter}>
+                <Login />
+            </AuthProvider>,
+        )
 
         await login()
 
