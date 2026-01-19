@@ -40,7 +40,12 @@ describe('Login', () => {
         mockLogin.mockResolvedValueOnce({ token: '123' })
         const mockAdapter = createMockAuthAdapter({
             useLocation: () => ({ location: '/login', navigate: mockNavigate }),
-            useProductInstances: () => ({ instances: [{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], setInstances: vi.fn() }),
+            useProductInstances: () => ({
+                instances: [{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }],
+                setInstances: vi.fn(),
+                isLoaded: true,
+                setIsLoaded: vi.fn(),
+            }),
         })
         render(
             <AuthProvider adapter={mockAdapter}>
@@ -57,7 +62,12 @@ describe('Login', () => {
         mockLogin.mockRejectedValue({ status: 401 })
         const mockAdapter = createMockAuthAdapter({
             useLocation: () => ({ location: '/login', navigate: mockNavigate }),
-            useProductInstances: () => ({ instances: [{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }], setInstances: vi.fn() }),
+            useProductInstances: () => ({
+                instances: [{ id: '22990bce-4968-46c6-bcc8-6654f8a5cf35', productId: 'shopping-list', productName: 'Einkaufsliste', url: '' }],
+                setInstances: vi.fn(),
+                isLoaded: true,
+                setIsLoaded: vi.fn(),
+            }),
         })
         render(
             <AuthProvider adapter={mockAdapter}>

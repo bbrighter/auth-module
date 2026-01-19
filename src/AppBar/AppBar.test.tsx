@@ -20,6 +20,7 @@ const defaultMockUseAuth: ReturnType<typeof useAuth> = {
     navigate: vi.fn(),
     piid: '',
     setPermissions: vi.fn(),
+    isLoaded: true,
 }
 
 vi.mock('../auth', () => ({ useAuth: vi.fn() }))
