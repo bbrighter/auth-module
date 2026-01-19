@@ -1,11 +1,10 @@
-
 import { respToProductInstances } from '../interface'
 import { useAdapter } from '../useAdapter'
 
 export const useGetPermissions = () => {
     const adapter = useAdapter()
     const api = adapter.useAuthApi()
-    const { setInstances } = adapter.useProductInstances()
+    const { setInstances, setIsLoaded } = adapter.useProductInstances()
     const { setUserName } = adapter.useUserName()
 
     return async () => {
@@ -14,6 +13,7 @@ export const useGetPermissions = () => {
 
         const instances = respToProductInstances(resp)
         setInstances(instances)
+        setIsLoaded(true)
 
         const userName = resp.userName
         setUserName(userName)
@@ -22,7 +22,7 @@ export const useGetPermissions = () => {
 
 export const usePermissions = () => {
     const adapter = useAdapter()
-    const { instances }= adapter.useProductInstances()
+    const { instances } = adapter.useProductInstances()
     return instances
 }
 
@@ -50,4 +50,10 @@ const isGuid = (testString: string | undefined): boolean => {
 export const usePiid = () => {
     const instance = useActiveInstance()
     return instance?.id
+}
+
+export const useInstancesLoaded = (): boolean => {
+    const adapter = useAdapter()
+    const { isLoaded } = adapter.useProductInstances()
+    return isLoaded
 }

@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
+
 import { UNAUTHORIZED_EVENT } from './constants'
 
 export const useHandleUnauthorized = (
     navigate: (_path: string) => void,
 ) => {
-
     useEffect(() => {
         const onUnauthorized = (e: Event) => {
             const path = (e as CustomEvent).detail as string

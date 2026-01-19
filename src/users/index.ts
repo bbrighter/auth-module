@@ -1,4 +1,4 @@
-export * from './useUserMgmt'
+export * from './interface'
 export * from './useAdapter'
 export * from './UserManagementProvider'
-export * from './interface'
+export * from './useUserMgmt'

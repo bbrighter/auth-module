@@ -1,12 +1,12 @@
-import { renderHook } from '@testing-library/react';
-import { describe, expect, it, Mock, vi } from 'vitest';
-import { createMockAdapter, mockAddUserApi, mockGetUsersApi, mockRemoveUserApi, mockSetUsers } from '../__test__/mockAdapter';
+import { renderHook } from '@testing-library/react'
+import { describe, expect, it, Mock, vi } from 'vitest'
+
+import { createMockAdapter, mockAddUserApi, mockGetUsersApi, mockRemoveUserApi, mockSetUsers } from '../__test__/mockAdapter'
 
 vi.mock('../useAdapter')
 
-import { useDeleteUser, useGetUsers, useInviteUser } from './useUsers';
-import { useAdapter } from '../useAdapter';
-
+import { useAdapter } from '../useAdapter'
+import { useDeleteUser, useGetUsers, useInviteUser } from './useUsers'
 
 describe('getUsers', () => {
     it('ok', async () => {
@@ -20,7 +20,6 @@ describe('getUsers', () => {
         expect(mockGetUsersApi).toHaveBeenCalled()
         expect(mockSetUsers).toHaveBeenCalledWith([{ id: '123', name: 'user 1' }])
     })
-
 })
 
 describe('useInviteUser', () => {
@@ -60,7 +59,5 @@ describe('useDeleteUser', () => {
 
         expect(mockRemoveUserApi).toHaveBeenCalledWith('ABC', 'name')
         expect(mockSetUsers).toHaveBeenCalledWith([{ id: '123', name: 'user 1' }])
-
     })
 })
-

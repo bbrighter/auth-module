@@ -1,7 +1,8 @@
 import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import { ChangeEvent, useState } from 'react'
-import Stack from '@mui/material/Stack'
+
 import { useUserMgmt } from '../../users'
 
 export default function UserInvite() {
@@ -26,22 +27,22 @@ export default function UserInvite() {
         setStatus(undefined)
     }
 
-
     return (
-        <Stack direction='row' spacing={2}>
+        <Stack direction="row" spacing={2}>
             <TextField
                 fullWidth
-                label='Nutzer einladen'
+                label="Nutzer einladen"
                 value={userToInvite}
                 onChange={onChange}
                 error={status != undefined}
                 helperText={status == 404 ? 'Nutzer existiert nicht' : ''}
-                onKeyDown={(e) => e.stopPropagation()}
+                onKeyDown={e => e.stopPropagation()}
             />
             <Button
                 onClick={onInvite}
                 loading={inviteLoading}
-            >Einladen
+            >
+                Einladen
             </Button>
         </Stack>
 

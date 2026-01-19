@@ -1,4 +1,4 @@
-import { useActiveInstance, useGetPermissions, useLogout, usePermissions, usePiid, useToken, useUserName } from './hooks'
+import { useActiveInstance, useGetPermissions, useInstancesLoaded, useLogout, usePermissions, usePiid, useToken, useUserName } from './hooks'
 import { useLogin } from './hooks/useLogin'
 import { useNavigate } from './navigation'
 
@@ -12,6 +12,7 @@ export const useAuth = () => {
     const userName = useUserName()
     const navigate = useNavigate()
     const piid = usePiid()
+    const isLoaded = useInstancesLoaded()
 
     return {
         login,
@@ -23,5 +24,6 @@ export const useAuth = () => {
         navigate,
         activeInstance,
         piid,
+        isLoaded,
     }
 }

@@ -32,7 +32,8 @@ export const useInviteUser = () => {
         try {
             const resp = await api.AddUserToProductInstance(piid, userName)
             setUsers([...users, { id: resp.id, name: userName }])
-        } catch (err: unknown) {
+        }
+        catch (err: unknown) {
             if (typeof (err) == 'object' && err != null && 'status' in err && typeof (err.status) == 'number') {
                 return err.status
             }

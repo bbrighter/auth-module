@@ -5,12 +5,11 @@ export const useLogout = () => {
     const adapter = useAdapter()
     const navigateLogin = useNavigateLogin()
     const { setToken } = adapter.useToken()
-    const { setUserName }= adapter.useUserName()
+    const { setUserName } = adapter.useUserName()
 
     return () => {
         setToken('')
         setUserName('')
         navigateLogin()
     }
-
 }

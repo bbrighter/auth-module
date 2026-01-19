@@ -13,7 +13,8 @@ export const useLogin = () => {
             setToken(resp.token)
             setUserName(userName)
             return true
-        } catch {
+        }
+        catch {
             return false
         }
     }

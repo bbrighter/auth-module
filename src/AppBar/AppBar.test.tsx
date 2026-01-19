@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { CustomAppBar } from './AppBar';
-import userEvent from '@testing-library/user-event';
-import { useAuth } from '../auth';
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
+import { useAuth } from '../auth'
+import { CustomAppBar } from './AppBar'
 
 const mockLogout = vi.fn()
 
@@ -36,7 +37,6 @@ describe('app bar', () => {
         vi.mocked(useAuth).mockReturnValue(defaultMockUseAuth)
         // vi.clearAllMocks()
     })
-
 
     it('renders', async () => {
         render(<CustomAppBar />)
@@ -76,7 +76,6 @@ describe('app bar', () => {
             expect(logoutButton).toHaveAttribute('aria-disabled', 'true')
         })
     })
-
 
     it('open user management', async () => {
         render(<CustomAppBar />)

@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react'
+
 import { UserStateAdapter } from './interface'
 
 export const AdapterContext = createContext<UserStateAdapter | null>(null)

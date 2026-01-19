@@ -26,20 +26,29 @@ export interface AuthApi {
 }
 
 export interface AuthStateAdapter {
-    useToken(): {token: string, setToken: (_: string) => void}
+    useToken(): { token: string, setToken: (_: string) => void }
     useAuthApi(): AuthApi | null
-    useUserName(): {userName: string, setUserName: (_: string) => void}
-    useProductInstances(): {instances: readonly ProductInstance[], setInstances:(_: Array<ProductInstance>) => void}
+    useUserName(): { userName: string, setUserName: (_: string) => void }
+    useProductInstances(): {
+        instances: readonly ProductInstance[]
+        setInstances: (_: Array<ProductInstance>) => void
+        isLoaded: boolean
+        setIsLoaded: (_: boolean) => void
+    }
     useProductKey(): ProductKey | null
-    useLocation(): {location: string, navigate:(_: string) => void}
+    useLocation(): { location: string, navigate: (_: string) => void }
 }
-
 
 export const defaultAdapter: AuthStateAdapter = {
     useToken: () => ({ token: '', setToken: (_: string) => console.log('not init') }),
     useAuthApi: () => null,
     useUserName: () => ({ userName: '', setUserName: (_: string) => console.log('not init') }),
-    useProductInstances: () => ({ instances: [], setInstances: (_: Array<ProductInstance>) => console.log('not init') }),
+    useProductInstances: () => ({
+        instances: [],
+        setInstances: (_: Array<ProductInstance>) => console.log('not init'),
+        isLoaded: false,
+        setIsLoaded: (_: boolean) => console.log('not init'),
+    }),
     useProductKey: () => null,
     useLocation: () => ({ location: '', navigate: (_: string) => console.log('not init') }),
 }
@@ -51,10 +60,8 @@ export type ProductInstance = {
     url: string
 }
 
-
-
 export const respToProductInstances = (resp: AuthData): Array<ProductInstance> => {
-    return resp.instances.map(i => {
+    return resp.instances.map((i) => {
         return {
             id: i.piid,
             productId: i.product,
@@ -66,13 +73,11 @@ export const respToProductInstances = (resp: AuthData): Array<ProductInstance> =
 }
 
 export const ProductKeys = {
-  ShoppingList: 'shopping-list',
-  HistaComplete: 'hista-complete',
-} as const;
+    ShoppingList: 'shopping-list',
+    HistaComplete: 'hista-complete',
+} as const
 
-export type ProductKey = (typeof ProductKeys)[keyof typeof ProductKeys];
-
-
+export type ProductKey = (typeof ProductKeys)[keyof typeof ProductKeys]
 
 const localOrProdUrl = (prodUrl: string) => {
     const hostname = new URL(window.location.href).host
