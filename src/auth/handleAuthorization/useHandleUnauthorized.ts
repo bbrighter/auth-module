@@ -1,12 +1,16 @@
 import { useEffect } from 'react'
 
+import { useAdapter } from '../useAdapter'
 import { UNAUTHORIZED_EVENT } from './constants'
 
 export const useHandleUnauthorized = (
     navigate: (_path: string) => void,
 ) => {
+    const adapter = useAdapter()
+    const { setToken } = adapter.useToken()
     useEffect(() => {
         const onUnauthorized = (e: Event) => {
+            setToken('')
             const path = (e as CustomEvent).detail as string
 
             if (!path) return
