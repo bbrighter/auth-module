@@ -65,15 +65,12 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: "pnpm"
           registry-url: "https://registry.npmjs.org/"
 
       - name: Get packages
         run: pnpm install
-
-      - name: Upgrade npm
-        run: npm install -g npm@latest
 
       - name: npm version
         run: npm --version
