@@ -7,13 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      rollup:
-        specifier: ^4.60.1
-        version: 4.60.1
-      tsdown:
-        specifier: ^0.21.7
-        version: 0.21.7(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(oxc-resolver@11.19.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1))(typescript@5.9.3)
     devDependencies:
       '@emotion/react':
         specifier: ^11.14.0
@@ -78,6 +71,9 @@ importers:
       react-dom:
         specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
+      tsdown:
+        specifier: ^0.21.7
+        version: 0.21.7(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(oxc-resolver@11.19.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1))(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3

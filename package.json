@@ -86,9 +86,5 @@
     "@mui/icons-material": "7.x",
     "@mui/material": "7.x",
     "react": "19.x"
-  },
-  "dependencies": {
-    "rollup": "^4.60.1",
-    "tsdown": "^0.21.7"
   }
 }
