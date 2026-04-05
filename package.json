@@ -11,31 +11,32 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
     },
     "./auth": {
-      "types": "./dist/auth.d.ts",
-      "import": "./dist/auth.js"
+      "types": "./dist/auth.d.mts",
+      "import": "./dist/auth.mjs"
     },
     "./users": {
-      "types": "./dist/users.d.ts",
-      "import": "./dist/users.js"
+      "types": "./dist/users.d.mts",
+      "import": "./dist/users.mjs"
     },
     "./avatar": {
-      "types": "./dist/avatar.d.ts",
-      "import": "./dist/avatar.js"
+      "types": "./dist/avatar.d.mts",
+      "import": "./dist/avatar.mjs"
     },
     "./login": {
-      "types": "./dist/login.d.ts",
-      "import": "./dist/login.js"
+      "types": "./dist/login.d.mts",
+      "import": "./dist/login.mjs"
     },
     "./app-bar": {
-      "types": "./dist/app-bar.d.ts",
-      "import": "./dist/app-bar.js"
+      "types": "./dist/app-bar.d.mts",
+      "import": "./dist/app-bar.mjs"
     }
   },
   "scripts": {
+    "tsup": "tsdown && pnpm pack",
     "build": "tsdown",
     "build:pack": "tsdown && pnpm pack",
     "test": "vitest",
@@ -75,7 +76,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "tsdown": "^0.21.7",
-    "typescript": "^6.0.2",
+    "typescript": "^5.9.3",
     "typescript-eslint": "^8.58.0",
     "vitest": "^4.1.2"
   },

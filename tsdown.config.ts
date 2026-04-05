@@ -23,4 +23,5 @@ export default defineConfig({
             '@emotion/styled',
         ],
     },
+    target: false,
 })
