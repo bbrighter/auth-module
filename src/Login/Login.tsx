@@ -1,6 +1,6 @@
-import { Box } from '@mui/material'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
+import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import { ChangeEvent, useEffect, useState } from 'react'
 
@@ -36,13 +36,14 @@ export function Login() {
     }, [activeInstance, navigate, loginState])
 
     return (
-        <Container sx={{ padding: '2rem', display: 'flex', flexDirection: 'column', rowGap: '1rem', width: '20rem' }}>
-            <Box
+        <Container sx={{ padding: '2rem', width: '20rem' }}>
+            <Stack
                 onSubmit={(e) => {
                     e.preventDefault()
                     onLogin()
                 }}
                 component="form"
+                spacing={2}
             >
                 <TextField label="Name" value={name} onChange={onNameChange} autoComplete="username" />
                 <TextField label="Passwort" type="password" value={password} onChange={onPasswordChange} autoComplete="current-password" />
@@ -54,7 +55,7 @@ export function Login() {
                 >
                     Login
                 </Button>
-            </Box>
+            </Stack>
         </Container>
     )
 }
