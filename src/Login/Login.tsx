@@ -1,3 +1,4 @@
+import { Box } from '@mui/material'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import TextField from '@mui/material/TextField'
@@ -36,16 +37,24 @@ export function Login() {
 
     return (
         <Container sx={{ padding: '2rem', display: 'flex', flexDirection: 'column', rowGap: '1rem', width: '20rem' }}>
-            <TextField label="Name" value={name} onChange={onNameChange} />
-            <TextField label="Passwort" type="password" value={password} onChange={onPasswordChange} />
-            <Button
-                variant="contained"
-                onClick={onLogin}
-                loading={loginState == 'loading'}
-                color={loginState == 'error' ? 'error' : 'primary'}
+            <Box
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    onLogin()
+                }}
+                component="form"
             >
-                Login
-            </Button>
+                <TextField label="Name" value={name} onChange={onNameChange} autoComplete="username" />
+                <TextField label="Passwort" type="password" value={password} onChange={onPasswordChange} autoComplete="current-password" />
+                <Button
+                    variant="contained"
+                    type="submit"
+                    loading={loginState == 'loading'}
+                    color={loginState == 'error' ? 'error' : 'primary'}
+                >
+                    Login
+                </Button>
+            </Box>
         </Container>
     )
 }

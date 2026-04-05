@@ -4,7 +4,6 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
-import sonarjs from 'eslint-plugin-sonarjs'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
@@ -14,7 +13,6 @@ export default defineConfig([
     reactRefresh.configs.vite,
     js.configs.recommended,
     stylistic.configs.recommended,
-    sonarjs.configs.recommended,
     globalIgnores(['dist', 'coverage', '.dependency-cruiser.cjs']),
     {
         files: ['**/*.{ts,tsx}'],

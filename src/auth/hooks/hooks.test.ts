@@ -18,7 +18,6 @@ describe('useLogin', () => {
 
         const { result } = renderHook(() => useLogin())
 
-        // eslint-disable-next-line sonarjs/no-hardcoded-passwords
         const ok = await result.current({ userName: 'name', password: 'pw' })
         expect(ok).toBeTruthy()
         expect(mockSetToken).toHaveBeenCalledWith('12345')
@@ -32,7 +31,6 @@ describe('useLogin', () => {
 
         const { result } = renderHook(() => useLogin())
 
-        // eslint-disable-next-line sonarjs/no-hardcoded-passwords
         const ok = await result.current({ userName: 'name', password: 'pw' })
         expect(ok).toBeFalsy()
         expect(mockSetToken).not.toHaveBeenCalled()
