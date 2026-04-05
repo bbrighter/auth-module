@@ -1,4 +1,4 @@
-import { defineConfig } from 'tsup'
+import { defineConfig } from 'tsdown'
 
 export default defineConfig({
     entry: {
@@ -13,12 +13,14 @@ export default defineConfig({
     dts: true,
     sourcemap: true,
     clean: true,
-    external: [
-        'react',
-        'react-dom',
-        'jotai',
-        '@mui/material',
-        '@emotion/react',
-        '@emotion/styled',
-    ],
+    deps: {
+        neverBundle: [
+            'react',
+            'react-dom',
+            'jotai',
+            '@mui/material',
+            '@emotion/react',
+            '@emotion/styled',
+        ],
+    },
 })
