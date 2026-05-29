@@ -107,4 +107,10 @@ describe('app bar', () => {
         const histaLink = hista.closest('a')!
         expect(histaLink).toHaveAttribute('href', 'url2/ABC')
     })
+
+    it('children are rendered', async () => {
+        render(<CustomAppBar><div>Hello</div></CustomAppBar>)
+
+        expect(await (screen.findByText('Hello'))).toBeInTheDocument()
+    })
 })
