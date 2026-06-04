@@ -1,7 +1,7 @@
-import { useAdapter } from '../useAdapter'
+import { useAdapter } from "../useAdapter";
 
 export const useUserName = () => {
-    const adapter = useAdapter()
-    const { userName } = adapter.useUserName()
-    return userName
-}
+	const adapter = useAdapter();
+	const { userName } = adapter.useUserName();
+	return userName;
+};

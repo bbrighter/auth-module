@@ -1,7 +1,7 @@
-import '@testing-library/jest-dom'
+import "@testing-library/jest-dom";
 
-import { beforeEach, vi } from 'vitest'
+import { beforeEach, vi } from "vitest";
 
 beforeEach(() => {
-    vi.resetAllMocks()
-})
+	vi.resetAllMocks();
+});

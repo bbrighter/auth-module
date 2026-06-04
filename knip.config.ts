@@ -1,9 +1,9 @@
-import { type KnipConfig } from 'knip'
+import type { KnipConfig } from "knip";
 
 const config: KnipConfig = {
-    ignoreBinaries: [
-        'dot', // Needed to visualize results from dependency-cruiser
-    ],
-}
+	ignoreBinaries: [
+		"dot", // Needed to visualize results from dependency-cruiser
+	],
+};
 
-export default config
+export default config;

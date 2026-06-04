@@ -1,90 +1,84 @@
 {
-  "name": "@bbrighter/auth-module",
-  "version": "0.1.1",
-  "description": "",
-  "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "publishConfig": {
-    "access": "public"
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.mts",
-      "import": "./dist/index.mjs"
-    },
-    "./auth": {
-      "types": "./dist/auth.d.mts",
-      "import": "./dist/auth.mjs"
-    },
-    "./users": {
-      "types": "./dist/users.d.mts",
-      "import": "./dist/users.mjs"
-    },
-    "./avatar": {
-      "types": "./dist/avatar.d.mts",
-      "import": "./dist/avatar.mjs"
-    },
-    "./login": {
-      "types": "./dist/login.d.mts",
-      "import": "./dist/login.mjs"
-    },
-    "./app-bar": {
-      "types": "./dist/app-bar.d.mts",
-      "import": "./dist/app-bar.mjs"
-    }
-  },
-  "scripts": {
-    "tsup": "tsdown && pnpm pack",
-    "build": "tsdown",
-    "build:pack": "tsdown && pnpm pack",
-    "test": "vitest",
-    "test:cover": "test --coverage",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "tsc": "tsc --noEmit",
-    "knip": "knip",
-    "dependencies:ci": "npx depcruise src  --include-only \"^src\"",
-    "dependencies:table": "npx depcruise src  --include-only \"^src\" --output-type html > depcruiser-graph.html",
-    "dependencies:graph": "npx depcruise --include-only \"^src\" --output-type dot src | dot -T svg > depcruiser-graph.svg"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.22.0",
-  "devDependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@eslint/js": "^9.39.4",
-    "@mui/icons-material": "^9.0.1",
-    "@mui/material": "^9.0.1",
-    "@stylistic/eslint-plugin": "^5.10.0",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/react": "^19.2.15",
-    "@vitest/coverage-v8": "^4.1.7",
-    "dependency-cruiser": "^17.4.2",
-    "eslint": "^9.39.4",
-    "eslint-plugin-react-hooks": "^7.1.1",
-    "eslint-plugin-react-refresh": "^0.4.26",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "globals": "^17.6.0",
-    "jsdom": "^29.1.1",
-    "knip": "^6.14.2",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
-    "tsdown": "^0.22.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.60.0",
-    "vitest": "^4.1.7"
-  },
-  "peerDependencies": {
-    "@emotion/react": "11.x",
-    "@emotion/styled": "11.x",
-    "@mui/icons-material": "9.x",
-    "@mui/material": "9.x",
-    "react": "19.x"
-  }
+	"name": "@bbrighter/auth-module",
+	"version": "0.1.1",
+	"description": "",
+	"type": "module",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"publishConfig": {
+		"access": "public"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.mts",
+			"import": "./dist/index.mjs"
+		},
+		"./auth": {
+			"types": "./dist/auth.d.mts",
+			"import": "./dist/auth.mjs"
+		},
+		"./users": {
+			"types": "./dist/users.d.mts",
+			"import": "./dist/users.mjs"
+		},
+		"./avatar": {
+			"types": "./dist/avatar.d.mts",
+			"import": "./dist/avatar.mjs"
+		},
+		"./login": {
+			"types": "./dist/login.d.mts",
+			"import": "./dist/login.mjs"
+		},
+		"./app-bar": {
+			"types": "./dist/app-bar.d.mts",
+			"import": "./dist/app-bar.mjs"
+		}
+	},
+	"scripts": {
+		"tsup": "tsdown && pnpm pack",
+		"build": "tsdown",
+		"build:pack": "tsdown && pnpm pack",
+		"test": "vitest",
+		"test:cover": "test --coverage",
+		"lint": "biome ci",
+		"lint:fix": "biome check --write",
+		"lint:local": "biome check",
+		"typecheck": "tsc --noEmit",
+		"knip": "knip",
+		"dependencies:ci": "npx depcruise src  --include-only \"^src\"",
+		"dependencies:table": "npx depcruise src  --include-only \"^src\" --output-type html > depcruiser-graph.html",
+		"dependencies:graph": "npx depcruise --include-only \"^src\" --output-type dot src | dot -T svg > depcruiser-graph.svg"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.22.0",
+	"devDependencies": {
+		"@biomejs/biome": "2.4.16",
+		"@emotion/react": "^11.14.0",
+		"@emotion/styled": "^11.14.1",
+		"@mui/icons-material": "^9.0.1",
+		"@mui/material": "^9.0.1",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
+		"@testing-library/user-event": "^14.6.1",
+		"@types/react": "^19.2.16",
+		"@vitest/coverage-v8": "^4.1.8",
+		"dependency-cruiser": "^17.4.3",
+		"jsdom": "^29.1.1",
+		"knip": "^6.15.0",
+		"react": "^19.2.7",
+		"react-dom": "^19.2.7",
+		"tsdown": "^0.22.1",
+		"typescript": "^6.0.3",
+		"vitest": "^4.1.8"
+	},
+	"peerDependencies": {
+		"@emotion/react": "11.x",
+		"@emotion/styled": "11.x",
+		"@mui/icons-material": "9.x",
+		"@mui/material": "9.x",
+		"react": "19.x"
+	}
 }

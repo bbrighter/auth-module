@@ -1,53 +1,48 @@
-import Avatar from '@mui/material/Avatar'
-import { MouseEventHandler } from 'react'
+import Avatar from "@mui/material/Avatar";
+import type { MouseEventHandler } from "react";
 
 export const UserAvatar = (props: {
-    onClick: MouseEventHandler<HTMLDivElement>
-    userName: string
+	onClick: MouseEventHandler<HTMLDivElement>;
+	userName: string;
 }) => {
-    return (
-        <Avatar
-            onClick={props.onClick}
-            {...stringAvatar(props.userName)}
-        />
-    )
-}
+	return <Avatar onClick={props.onClick} {...stringAvatar(props.userName)} />;
+};
 
 function stringAvatar(name: string | undefined) {
-    let bgColor = 'rgb(107, 107, 107)'
-    let initials = ''
-    if (name) {
-        const letters = name.split(' ')
-        initials = letters[0][0].toUpperCase()
-        if (letters.length > 1) {
-            initials += letters[1][0].toUpperCase()
-        }
-        bgColor = stringToColor(name)
-    }
-    return {
-        sx: {
-            bgcolor: bgColor,
-            marginLeft: 'auto',
-        },
-        children: initials,
-    }
+	let bgColor = "rgb(107, 107, 107)";
+	let initials = "";
+	if (name) {
+		const letters = name.split(" ");
+		initials = letters[0][0].toUpperCase();
+		if (letters.length > 1) {
+			initials += letters[1][0].toUpperCase();
+		}
+		bgColor = stringToColor(name);
+	}
+	return {
+		sx: {
+			bgcolor: bgColor,
+			marginLeft: "auto",
+		},
+		children: initials,
+	};
 }
 
 function stringToColor(string: string) {
-    if (string == 'Julia') return '#4169E1'
-    let hash = 0
-    let i
+	if (string === "Julia") return "#4169E1";
+	let hash = 0;
+	let i: number;
 
-    for (i = 0; i < string.length; i += 1) {
-        hash = string.charCodeAt(i) + ((hash << 5) - hash)
-    }
+	for (i = 0; i < string.length; i += 1) {
+		hash = string.charCodeAt(i) + ((hash << 5) - hash);
+	}
 
-    let color = '#'
+	let color = "#";
 
-    for (i = 0; i < 3; i += 1) {
-        const value = (hash >> (i * 8)) & 0xff
-        color += `00${value.toString(16)}`.slice(-2)
-    }
+	for (i = 0; i < 3; i += 1) {
+		const value = (hash >> (i * 8)) & 0xff;
+		color += `00${value.toString(16)}`.slice(-2);
+	}
 
-    return color
+	return color;
 }
