@@ -1,14 +1,22 @@
 {
 	"compilerOptions": {
-		"target": "ESNext",
-		"module": "ESNext",
-		"jsx": "react-jsx",
-		"declaration": false,
+		// Type checking
+		"strict": true, // Default = true
+		// Modules
+		"rootDir": "./src",
+		"module": "esnext",
 		"moduleResolution": "bundler",
-		"strict": true,
+
+		// Interop constraints
+		"declaration": false,
 		"esModuleInterop": true,
+
+		// Language and environment
+		"target": "ESNext",
+		"jsx": "react-jsx",
+
+		// Completeness
 		"skipLibCheck": true
 	},
-	"include": ["src", "index.ts", "src/UserManagement/__test__/types.d.ts"],
-	"types": ["node", "@testing-library/jest-dom"]
+	"include": ["src/**/*"]
 }
