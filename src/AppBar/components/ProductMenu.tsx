@@ -19,7 +19,12 @@ export function ProductMenu() {
 	return (
 		<>
 			<UserAvatar onClick={handleClick} userName={userName} />
-			<Menu open={open} anchorEl={anchor} onClose={handleClose}>
+			<Menu
+				open={open}
+				anchorEl={anchor}
+				onClose={handleClose}
+				disableRestoreFocus
+			>
 				<ProductSelection />
 				<UserManagement />
 				<LogoutMenuEntry />

@@ -46,7 +46,6 @@ vi.mock("../users", () => ({
 describe("app bar", () => {
 	beforeEach(() => {
 		vi.mocked(useAuth).mockReturnValue(defaultMockUseAuth);
-		// vi.clearAllMocks()
 	});
 
 	it("renders", async () => {

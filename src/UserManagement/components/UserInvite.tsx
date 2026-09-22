@@ -14,10 +14,10 @@ export default function UserInvite() {
 
 	const onInvite = async () => {
 		setInviteLoading(true);
-		const status = await inviteUser({ userName: userToInvite });
-		setStatus(status);
+		const userStatus = await inviteUser({ userName: userToInvite });
+		setStatus(userStatus);
 		setInviteLoading(false);
-		if (status === undefined) {
+		if (userStatus === undefined) {
 			setUserToInvite("");
 		}
 	};

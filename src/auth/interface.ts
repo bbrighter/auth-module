@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/** biome-ignore-all lint/suspicious/noConsole:  Log to console in case not set is okay*/
 export type LoginParams = {
 	userName: string;
 	password: string;
