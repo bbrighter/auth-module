@@ -3,11 +3,15 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { type ChangeEvent, useState } from "react";
 
-import { useUserMgmt } from "../../users";
+export type UserInviteProps = {
+	inviteUser: ({
+		userName,
+	}: {
+		userName: string;
+	}) => Promise<number | undefined>;
+};
 
-export default function UserInvite() {
-	const { inviteUser } = useUserMgmt();
-
+export const UserInviteView = ({ inviteUser }: UserInviteProps) => {
 	const [userToInvite, setUserToInvite] = useState("");
 	const [inviteLoading, setInviteLoading] = useState(false);
 	const [status, setStatus] = useState<undefined | number>();
@@ -43,4 +47,4 @@ export default function UserInvite() {
 			</Button>
 		</Stack>
 	);
-}
+};

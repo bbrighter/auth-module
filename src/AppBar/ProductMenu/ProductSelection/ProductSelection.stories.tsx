@@ -1,23 +1,7 @@
 import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import { useEffect, useRef, useState } from "react";
-import { CustomAppBar } from "./AppBar";
-import ProductSelectionView from "./ProductMenu/ProductSelection/ProductSelectionView";
-
-export const NoChildren = () => <CustomAppBar />;
-
-export const OneChild = () => (
-	<CustomAppBar>
-		<div>Child 1</div>
-	</CustomAppBar>
-);
-
-export const TwoChildren = () => (
-	<CustomAppBar>
-		<div>Child 1</div>
-		<button type="button">Button</button>
-	</CustomAppBar>
-);
+import ProductSelectionView from "./ProductSelectionView";
 
 const prod1 = {
 	id: "123",

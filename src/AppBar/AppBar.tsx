@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import type { ReactNode } from "react";
 
-import { ProductMenu } from "./components/ProductMenu";
+import { ProductMenu } from "./ProductMenu/ProductMenu";
 
 export const CustomAppBar = (props: { children?: ReactNode }) => {
 	return (

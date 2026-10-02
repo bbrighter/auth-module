@@ -3,11 +3,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 
-import { useAuth } from "../../auth";
+type LogoutProps = {
+	token: string;
+	logout: () => void;
+};
 
-export function LogoutMenuEntry() {
-	const { token, logout } = useAuth();
-
+export function LogoutView({ token, logout }: LogoutProps) {
 	return (
 		<MenuItem onClick={logout} disabled={token === ""}>
 			<ListItemIcon>

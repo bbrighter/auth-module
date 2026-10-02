@@ -11,6 +11,8 @@ export type AuthTestOptions = {
 	token?: string;
 	location?: string;
 	instances?: ProductInstance[];
+	language?: string;
+	loadingMode?: string;
 };
 
 export function createAuthAdapter(

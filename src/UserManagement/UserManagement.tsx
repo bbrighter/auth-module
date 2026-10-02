@@ -1,8 +1,8 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import UserInvite from "./components/UserInvite";
-import UserList from "./components/UserList";
+import UserInvite from "./Invite/UserInvite";
+import UserList from "./List/UserList";
 
 export function UserManagement({
 	currentUserName,

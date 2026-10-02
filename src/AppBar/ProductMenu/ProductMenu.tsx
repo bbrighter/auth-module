@@ -2,9 +2,10 @@ import Menu from "@mui/material/Menu";
 import { type MouseEvent, useState } from "react";
 import { UserAvatar } from "../../Avatar";
 import { useAuth } from "../../auth";
-import { LogoutMenuEntry } from "./LogoutMenuEntry";
-import ProductSelection from "./ProductSelection";
-import UserManagement from "./UserManagementButton";
+import { Logout } from "./Logout/Logout";
+import ProductSelection from "./ProductSelection/ProductSelection";
+import { Settings } from "./Settings/Settings";
+import UserManagement from "./UserManagement/UserManagement";
 
 export function ProductMenu() {
 	const [anchor, setAnchor] = useState<null | HTMLElement>(null);
@@ -27,7 +28,8 @@ export function ProductMenu() {
 			>
 				<ProductSelection />
 				<UserManagement />
-				<LogoutMenuEntry />
+				<Settings />
+				<Logout />
 			</Menu>
 		</>
 	);

@@ -1,0 +1,77 @@
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+import {
+	SettingsDialog,
+	type SettingsDialogProps,
+} from "../ProductMenu/Settings/SettingsDialog";
+import {
+	getLanguageSelect,
+	getLoadingModeCheckbox,
+	getSaveButton,
+} from "./utils";
+
+describe("SettingsDialog component", () => {
+	const onClose = vi.fn();
+	const onSave = vi.fn();
+	const renderDialog = (override: Partial<SettingsDialogProps> = {}) =>
+		render(
+			<SettingsDialog
+				language={"de-DE"}
+				loadingMode={"spinner"}
+				saveSettings={onSave}
+				availableLanguages={[{ value: "de-DE", label: "Deutsch" }]}
+				open={true}
+				onClose={onClose}
+				{...override}
+			/>,
+		);
+	it("Renders", () => {
+		renderDialog();
+
+		screen.getByText("Benutzereinstellungen");
+		expect(getSaveButton()).toBeInTheDocument();
+		expect(getLoadingModeCheckbox()).toBeInTheDocument();
+		expect(getLanguageSelect()).toBeInTheDocument();
+	});
+
+	it("Uncheck and save", async () => {
+		renderDialog({ loadingMode: "spinner" });
+
+		const checkbox = getLoadingModeCheckbox();
+		expect(checkbox).toBeChecked();
+		await userEvent.click(checkbox);
+		expect(checkbox).not.toBeChecked();
+
+		await userEvent.click(getSaveButton());
+		expect(onClose).toHaveBeenCalledOnce();
+		expect(onSave).toHaveBeenCalledExactlyOnceWith({
+			language: "de-DE",
+			loadingMode: "none",
+		});
+	});
+
+	it("Change language and save", async () => {
+		renderDialog({
+			language: "de-DE",
+			availableLanguages: [
+				{ value: "de-DE", label: "Deutsch" },
+				{ value: "en-US", label: "English" },
+			],
+		});
+
+		const languageSelect = getLanguageSelect();
+		expect(languageSelect).toHaveTextContent("Deutsch");
+
+		await userEvent.click(languageSelect);
+		const english = screen.getByRole("option", { name: "English" });
+		await userEvent.click(english);
+
+		await userEvent.click(getSaveButton());
+		expect(onClose).toHaveBeenCalledOnce();
+		expect(onSave).toHaveBeenCalledExactlyOnceWith({
+			language: "en-US",
+			loadingMode: "spinner",
+		});
+	});
+});
