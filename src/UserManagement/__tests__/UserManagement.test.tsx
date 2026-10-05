@@ -108,7 +108,7 @@ describe("user management", () => {
 
 		await inviteUser("new user");
 
-		expect(screen.getAllByTestId("deleteUser")).toHaveLength(2);
+		expect(screen.getAllByRole("listitem")).toHaveLength(2);
 		expect(screen.getByText("Nutzer existiert nicht")).toBeInTheDocument();
 	});
 });

@@ -3,6 +3,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import type { ProductInstance } from "../../../auth";
+import { useTranslation } from "../../../localization/useTranslation";
 
 type ProductSelectionProps = {
 	activeInstance: ProductInstance | undefined;
@@ -13,6 +14,7 @@ export default function ProductSelectionView({
 	activeInstance,
 	permissions,
 }: ProductSelectionProps) {
+	const t = useTranslation();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -32,7 +34,7 @@ export default function ProductSelectionView({
 	return (
 		<>
 			<MenuItem onClick={handleClick} selected={open}>
-				Produkte
+				{t("Produkte")}
 			</MenuItem>
 			<Menu
 				open={open}

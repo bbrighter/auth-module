@@ -38,7 +38,7 @@ const defaultUserManagementView = (
 		deleteUser={async ({ userName }) => console.log(userName)}
 		inviteUser={async ({ userName }) => {
 			await console.log(userName);
-			return;
+			return 200;
 		}}
 		{...props}
 	/>

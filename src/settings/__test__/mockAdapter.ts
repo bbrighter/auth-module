@@ -2,21 +2,29 @@ import { vi } from "vitest";
 
 import type { SettingsApi, SettingsStateAdapter } from "../interface";
 
-export const createMockSettingsApi = (
+export const mockGetSettings = vi.fn();
+export const mockSetSettings = vi.fn();
+export const mockPatchSettings = vi.fn();
+
+const createMockSettingsApi = (
 	overrides?: Partial<SettingsApi>,
 ): SettingsApi => ({
-	GetSettings: vi.fn(),
-	PatchSettings: vi.fn(),
+	GetSettings: mockGetSettings,
+	PatchSettings: mockPatchSettings,
 	...overrides,
 });
 
 export const createMockSettingAdapter = (
 	overrides?: Partial<SettingsStateAdapter>,
-): SettingsStateAdapter => ({
-	useSettingsApi: () => createMockSettingsApi(),
-	useSettings: () => ({
-		settings: { language: "de-DE", loadingMode: "spinner" },
-		setSettings: vi.fn(),
-	}),
-	...overrides,
-});
+): SettingsStateAdapter => {
+	const settingsApi = createMockSettingsApi();
+
+	return {
+		useSettingsApi: () => settingsApi,
+		useSettings: () => ({
+			settings: { language: "de-DE", loadingMode: "spinner" },
+			setSettings: mockSetSettings,
+		}),
+		...overrides,
+	};
+};

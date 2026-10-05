@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noConsole: Used for ladle only */
 import type { User, UserStateAdapter } from "../users";
 
 export type UserTestOptions = {
@@ -6,7 +7,7 @@ export type UserTestOptions = {
 };
 
 export const createUserAdapter = (
-	options: Partial<UserTestOptions>,
+	options: UserTestOptions,
 ): UserStateAdapter => {
 	const {
 		users = [
@@ -20,8 +21,7 @@ export const createUserAdapter = (
 		useApi: () => ({
 			AddUserToProductInstance: async (_piid, _name) => ({ id: "123" }),
 			GetUsersForProductInstance: async (_piid) => ({ users: users }),
-			RemoveUserFromProductInstance: async (piid, name) =>
-				console.log(piid, name),
+			RemoveUserFromProductInstance: async (id, name) => console.log(id, name),
 		}),
 		usePiid: () => piid,
 		useUsers: () => ({

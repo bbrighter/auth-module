@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { useTranslation } from "../localization/useTranslation";
 import { type UserInviteProps, UserInviteView } from "./Invite/UserInviteView";
 import { type UserListProps, UserListView } from "./List/UserListView";
 
@@ -13,9 +14,10 @@ export const UserManagementView = ({
 	deleteUser,
 	inviteUser,
 }: UserManagementProps) => {
+	const t = useTranslation();
 	return (
 		<Box>
-			<Typography variant="h4">Nutzerverwaltung</Typography>
+			<Typography variant="h4">{t("Nutzerverwaltung")}</Typography>
 			<UserListView
 				currentUserName={currentUserName}
 				users={users}

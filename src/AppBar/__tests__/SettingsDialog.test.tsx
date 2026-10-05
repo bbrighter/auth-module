@@ -2,9 +2,9 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import {
-	SettingsDialog,
-	type SettingsDialogProps,
-} from "../ProductMenu/Settings/SettingsDialog";
+	type SettingsProps,
+	SettingsView,
+} from "../ProductMenu/Settings/SettingsView";
 import {
 	getLanguageSelect,
 	getLoadingModeCheckbox,
@@ -12,17 +12,14 @@ import {
 } from "./utils";
 
 describe("SettingsDialog component", () => {
-	const onClose = vi.fn();
 	const onSave = vi.fn();
-	const renderDialog = (override: Partial<SettingsDialogProps> = {}) =>
+	const renderDialog = (override: Partial<SettingsProps> = {}) =>
 		render(
-			<SettingsDialog
+			<SettingsView
 				language={"de-DE"}
 				loadingMode={"spinner"}
 				saveSettings={onSave}
 				availableLanguages={[{ value: "de-DE", label: "Deutsch" }]}
-				open={true}
-				onClose={onClose}
 				{...override}
 			/>,
 		);
@@ -44,7 +41,6 @@ describe("SettingsDialog component", () => {
 		expect(checkbox).not.toBeChecked();
 
 		await userEvent.click(getSaveButton());
-		expect(onClose).toHaveBeenCalledOnce();
 		expect(onSave).toHaveBeenCalledExactlyOnceWith({
 			language: "de-DE",
 			loadingMode: "none",
@@ -68,7 +64,6 @@ describe("SettingsDialog component", () => {
 		await userEvent.click(english);
 
 		await userEvent.click(getSaveButton());
-		expect(onClose).toHaveBeenCalledOnce();
 		expect(onSave).toHaveBeenCalledExactlyOnceWith({
 			language: "en-US",
 			loadingMode: "spinner",

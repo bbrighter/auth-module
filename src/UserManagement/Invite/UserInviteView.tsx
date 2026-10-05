@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { type ChangeEvent, useState } from "react";
+import { useTranslation } from "../../localization/useTranslation";
 
 export type UserInviteProps = {
 	inviteUser: ({
@@ -12,6 +13,7 @@ export type UserInviteProps = {
 };
 
 export const UserInviteView = ({ inviteUser }: UserInviteProps) => {
+	const t = useTranslation();
 	const [userToInvite, setUserToInvite] = useState("");
 	const [inviteLoading, setInviteLoading] = useState(false);
 	const [status, setStatus] = useState<undefined | number>();
@@ -35,15 +37,15 @@ export const UserInviteView = ({ inviteUser }: UserInviteProps) => {
 		<Stack direction="row" spacing={2}>
 			<TextField
 				fullWidth
-				label="Nutzer einladen"
+				label={t("Nutzer einladen")}
 				value={userToInvite}
 				onChange={onChange}
 				error={status !== undefined}
-				helperText={status === 404 ? "Nutzer existiert nicht" : ""}
+				helperText={status === 404 ? t("Nutzer existiert nicht") : ""}
 				onKeyDown={(e) => e.stopPropagation()}
 			/>
 			<Button onClick={onInvite} loading={inviteLoading}>
-				Einladen
+				{t("Einladen")}
 			</Button>
 		</Stack>
 	);

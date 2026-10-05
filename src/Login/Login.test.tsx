@@ -13,15 +13,12 @@ import { Login } from "./Login";
 describe("Login", () => {
 	const login = async () => {
 		const nameInput = screen.getByLabelText("Name");
-		expect(nameInput).toBeInTheDocument();
 		await userEvent.type(nameInput, "name");
 
 		const passwordInput = screen.getByLabelText("Passwort");
-		expect(passwordInput).toBeInTheDocument();
 		await userEvent.type(passwordInput, "password");
 
 		const loginButton = screen.getByText("Login");
-		expect(loginButton).toBeInTheDocument();
 		await userEvent.click(loginButton);
 	};
 

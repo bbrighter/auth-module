@@ -1,3 +1,4 @@
+// /** biome-ignore-all lint/suspicious/noBitwiseOperators: Use this  */
 import Avatar from "@mui/material/Avatar";
 import type { MouseEventHandler } from "react";
 
@@ -28,21 +29,14 @@ function stringAvatar(name: string | undefined) {
 	};
 }
 
-function stringToColor(string: string) {
-	if (string === "Julia") return "#4169E1";
+function stringToColor(value: string) {
+	if (value === "Julia") return "#4169E1";
+
 	let hash = 0;
-	let i: number;
 
-	for (i = 0; i < string.length; i += 1) {
-		hash = string.charCodeAt(i) + ((hash << 5) - hash);
+	for (const char of value) {
+		hash = (hash * 31 + char.charCodeAt(0)) % 0xffffff;
 	}
 
-	let color = "#";
-
-	for (i = 0; i < 3; i += 1) {
-		const value = (hash >> (i * 8)) & 0xff;
-		color += `00${value.toString(16)}`.slice(-2);
-	}
-
-	return color;
+	return `#${hash.toString(16).padStart(6, "0")}`;
 }

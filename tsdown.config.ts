@@ -9,6 +9,7 @@ export default defineConfig({
 		avatar: "src/Avatar/index.ts",
 		"app-bar": "src/AppBar/index.ts",
 		settings: "src/settings/index.ts",
+		localization: "src/localization/index.ts",
 	},
 	format: ["esm"],
 	dts: true,

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noConsole: Used for ladle only */
 import type { SettingsData, SettingsStateAdapter } from "../settings/interface";
 
 export type SettingsTestOptions = {
@@ -13,7 +14,8 @@ export function createSettingsAdapter(
 	return {
 		useSettingsApi: () => ({
 			GetSettings: async () => ({ language, loadingMode }),
-			PatchSettings: async (_params: Partial<SettingsData>) => {},
+			PatchSettings: async (params: Partial<SettingsData>) =>
+				console.log(params),
 		}),
 		useSettings: () => ({
 			settings: { language, loadingMode },

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noConsole: Used for ladle only */
 import {
 	type AuthStateAdapter,
 	type LoginParams,
@@ -56,7 +57,7 @@ export function createAuthAdapter(
 
 		useProductInstances: () => ({
 			instances,
-			setInstances: () => {},
+			setInstances: () => console.log,
 			isLoaded: true,
 			setIsLoaded: console.log,
 		}),

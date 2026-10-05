@@ -6,6 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import { useEffect } from "react";
+import { useTranslation } from "../../localization/useTranslation";
 import type { User } from "../../users";
 
 export type UserListProps = {
@@ -23,6 +24,7 @@ export const UserListView = ({
 	avatarProps,
 	deleteUser,
 }: UserListProps) => {
+	const t = useTranslation();
 	// biome-ignore lint/correctness/useExhaustiveDependencies: setUsers does not change
 	useEffect(() => {
 		setUsers();
@@ -37,8 +39,7 @@ export const UserListView = ({
 						<IconButton
 							onClick={() => deleteUser({ userName: u.name })}
 							disabled={u.name === currentUserName}
-							data-testid="deleteUser"
-							title="Löschen"
+							title={t("Löschen")}
 						>
 							<DeleteIcon />
 						</IconButton>
