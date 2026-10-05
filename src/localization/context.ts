@@ -3,9 +3,8 @@ import type { Translate } from "./types";
 
 export const TranslationContext = createContext<Translate | null>(null);
 
-export const useAdapter = (): Translate => {
+export const useAdapter = (): Translate | null => {
 	const ctx = useContext(TranslationContext);
-	if (!ctx) throw new Error("TranslationContext missing");
 
 	return ctx;
 };

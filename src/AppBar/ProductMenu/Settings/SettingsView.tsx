@@ -1,6 +1,6 @@
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,15 +17,14 @@ export type SettingsProps = {
 	availableLanguages: Array<{ value: string; label: string }>;
 };
 
-export const SettingsView = ({
+export const SettingsDialogView = ({
 	availableLanguages,
 	language,
 	loadingMode,
 	saveSettings,
 }: SettingsProps) => {
 	const t = useTranslation();
-	const [open, setOpen] = useState(false);
-	const onClose = () => setOpen(false);
+
 	const [selectedLanguage, setSelectedLanguage] = useState(language);
 	const [selectedLoadingMode, setSelectedLoadingMode] = useState(loadingMode);
 
@@ -41,35 +40,31 @@ export const SettingsView = ({
 			language: selectedLanguage,
 			loadingMode: selectedLoadingMode,
 		});
-		onClose();
 	};
 
 	return (
-		<>
-			<MenuItem onClick={() => setOpen(true)}>{t("Einstellungen")}</MenuItem>
-			<Dialog open={open} onClose={onClose} disableRestoreFocus>
-				<DialogTitle>{t("Benutzereinstellungen")}</DialogTitle>
-				<Stack spacing={1} sx={{ padding: 4 }}>
-					<FormControlLabel
-						control={
-							<Checkbox checked={animations} onChange={onToggleCheckbox} />
-						}
-						label="Ladeanimationen"
-					/>
-					<Select
-						label="Sprache"
-						value={selectedLanguage}
-						onChange={(e) => setSelectedLanguage(e.target.value)}
-					>
-						{availableLanguages.map((l) => (
-							<MenuItem value={l.value} key={l.value}>
-								{l.label}
-							</MenuItem>
-						))}
-					</Select>
-				</Stack>
-				<Button onClick={onSave}>Speichern</Button>
-			</Dialog>
-		</>
+		<Box>
+			<DialogTitle>{t("Benutzereinstellungen")}</DialogTitle>
+			<Stack spacing={1} sx={{ padding: 4 }}>
+				<FormControlLabel
+					control={
+						<Checkbox checked={animations} onChange={onToggleCheckbox} />
+					}
+					label="Ladeanimationen"
+				/>
+				<Select
+					label="Sprache"
+					value={selectedLanguage}
+					onChange={(e) => setSelectedLanguage(e.target.value)}
+				>
+					{availableLanguages.map((l) => (
+						<MenuItem value={l.value} key={l.value}>
+							{l.label}
+						</MenuItem>
+					))}
+				</Select>
+			</Stack>
+			<Button onClick={onSave}>Speichern</Button>
+		</Box>
 	);
 };

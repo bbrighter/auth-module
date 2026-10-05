@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import {
+	SettingsDialogView,
 	type SettingsProps,
-	SettingsView,
 } from "../ProductMenu/Settings/SettingsView";
 import {
 	getLanguageSelect,
@@ -15,7 +15,7 @@ describe("SettingsDialog component", () => {
 	const onSave = vi.fn();
 	const renderDialog = (override: Partial<SettingsProps> = {}) =>
 		render(
-			<SettingsView
+			<SettingsDialogView
 				language={"de-DE"}
 				loadingMode={"spinner"}
 				saveSettings={onSave}

@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { LogoutView } from "../ProductMenu/Logout/LogoutView";
-import { getLogoutEntry } from "./selectors";
+import { getLogoutEntry } from "./utils";
 
 describe("LogoutMenuEntry", () => {
 	const logout = vi.fn();

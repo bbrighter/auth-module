@@ -7,9 +7,16 @@ import { useSettings } from "../../settings";
 import { useUserMgmt } from "../../users";
 import { CustomAppBar } from "../AppBar";
 import {
+	findAndOpenAvatarMenu,
 	getLanguageSelect,
 	getLoadingModeCheckbox,
+	getLogoutEntry,
+	getProductSwitchEntry,
 	getSaveButton,
+	getUserSettingsEntry,
+	openProductSwitch,
+	openUserManagement,
+	openUserSettings,
 } from "./utils";
 
 const mockLogout = vi.fn();
@@ -72,21 +79,19 @@ describe("app bar", () => {
 	it("renders", async () => {
 		render(<CustomAppBar />);
 
-		const avatarMenu = await screen.findByText("U1");
-		expect(avatarMenu).toBeInTheDocument();
-		await userEvent.click(avatarMenu);
-		expect(screen.getByText("Produkte")).toBeInTheDocument();
+		await findAndOpenAvatarMenu("U1");
+		getProductSwitchEntry();
+		getLogoutEntry();
+		getUserSettingsEntry();
 	});
 
 	describe("logout", () => {
 		it("ok", async () => {
 			render(<CustomAppBar />);
 
-			const avatarMenu = await screen.findByText("U1");
-			expect(avatarMenu).toBeInTheDocument();
-			await userEvent.click(avatarMenu);
+			await findAndOpenAvatarMenu("U1");
 
-			const logoutButton = screen.getByText("Logout");
+			const logoutButton = getLogoutEntry();
 			await userEvent.click(logoutButton);
 			expect(mockLogout).toHaveBeenCalled();
 		});
@@ -99,9 +104,7 @@ describe("app bar", () => {
 
 			render(<CustomAppBar />);
 
-			const avatarMenu = await screen.findByText("U1");
-			expect(avatarMenu).toBeInTheDocument();
-			await userEvent.click(avatarMenu);
+			await findAndOpenAvatarMenu("U1");
 
 			const logoutButton = screen
 				.getByText("Logout")
@@ -113,24 +116,18 @@ describe("app bar", () => {
 	it("open user management", async () => {
 		render(<CustomAppBar />);
 
-		const avatarMenu = await screen.findByText("U1");
-		expect(avatarMenu).toBeInTheDocument();
-		await userEvent.click(avatarMenu);
+		await findAndOpenAvatarMenu("U1");
 
-		const userMgmtButton = screen.getByText("Benutzer");
-		await userEvent.click(userMgmtButton);
+		await openUserManagement();
 		expect(screen.getByText("Nutzerverwaltung")).toBeInTheDocument();
 	});
 
 	it("change product instance", async () => {
 		render(<CustomAppBar />);
 
-		const avatarMenu = await screen.findByText("U1");
-		expect(avatarMenu).toBeInTheDocument();
-		await userEvent.click(avatarMenu);
+		await findAndOpenAvatarMenu("U1");
 
-		const productSelection = screen.getByRole("menuitem", { name: "Produkte" });
-		await userEvent.click(productSelection);
+		await openProductSwitch();
 
 		const shoppingList = screen.getByText("Einkaufsliste");
 		expect(shoppingList).toBeInTheDocument();
@@ -156,13 +153,9 @@ describe("app bar", () => {
 	it("Open and edit settings", async () => {
 		render(<CustomAppBar />);
 
-		const avatarMenu = await screen.findByText("U1");
-		await userEvent.click(avatarMenu);
+		await findAndOpenAvatarMenu("U1");
 
-		const settingsItem = screen.getByRole("menuitem", {
-			name: "Einstellungen",
-		});
-		await userEvent.click(settingsItem);
+		await openUserSettings();
 		screen.getByRole("dialog");
 		await userEvent.click(getLoadingModeCheckbox());
 		getLanguageSelect();

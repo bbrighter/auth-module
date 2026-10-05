@@ -1,9 +1,8 @@
 import { Menu } from "@mui/material";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import ProductSelectionView from "../ProductMenu/ProductSelection/ProductSelectionView";
-import { getProductMenu, openProductMenu } from "./selectors";
+import { openProductSwitch } from "./utils";
 
 describe("ProductSelectionMenu component", () => {
 	const prod1 = {
@@ -32,8 +31,7 @@ describe("ProductSelectionMenu component", () => {
 	it("Product menu opens and renders products", async () => {
 		renderProductMenu();
 
-		const productMenu = getProductMenu();
-		await userEvent.click(productMenu);
+		await openProductSwitch();
 
 		expect(screen.getByText("Product 1")).toBeInTheDocument();
 		expect(screen.getByText("Product 2")).toBeInTheDocument();
@@ -41,7 +39,7 @@ describe("ProductSelectionMenu component", () => {
 
 	it("Only current product is highlighted", async () => {
 		renderProductMenu();
-		await openProductMenu();
+		await openProductSwitch();
 
 		const activeProduct = screen.getByRole("menuitem", {
 			name: "Product 1 123",
@@ -56,7 +54,7 @@ describe("ProductSelectionMenu component", () => {
 
 	it("Menu items have correct URL", async () => {
 		renderProductMenu();
-		await openProductMenu();
+		await openProductSwitch();
 
 		const activeProduct = screen.getByRole("menuitem", {
 			name: "Product 1 123",
