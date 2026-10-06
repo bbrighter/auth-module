@@ -14,7 +14,7 @@ export const useGetSettings = () => {
 	const api = adapter.useSettingsApi();
 	if (!api) throw "Api is not defined";
 
-	const { GetSettings } = api;
+	const { GetUserSettings: GetSettings } = api;
 
 	return async () => {
 		const settings = await GetSettings();
@@ -28,7 +28,7 @@ export const useSaveSettings = () => {
 	const api = adapter.useSettingsApi();
 	if (!api) throw "Api is not defined";
 
-	const { PatchSettings } = api;
+	const { PatchUserSettings: PatchSettings } = api;
 
 	return async (updates: Partial<SettingsData>) => {
 		await PatchSettings(updates);

@@ -6,8 +6,8 @@ export type SettingsData = {
 };
 
 export interface SettingsApi {
-	GetSettings: () => Promise<SettingsData>;
-	PatchSettings: (settings: Partial<SettingsData>) => Promise<void>;
+	GetUserSettings: () => Promise<SettingsData>;
+	PatchUserSettings: (settings: Partial<SettingsData>) => Promise<void>;
 }
 
 export interface SettingsStateAdapter {

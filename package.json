@@ -33,6 +33,10 @@
 		"./app-bar": {
 			"types": "./dist/app-bar.d.mts",
 			"import": "./dist/app-bar.mjs"
+		},
+		"./settings": {
+			"types": "./dist/settings.d.mts",
+			"import": "./dist/settings.mjs"
 		}
 	},
 	"scripts": {

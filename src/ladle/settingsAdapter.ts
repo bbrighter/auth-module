@@ -13,8 +13,8 @@ export function createSettingsAdapter(
 
 	return {
 		useSettingsApi: () => ({
-			GetSettings: async () => ({ language, loadingMode }),
-			PatchSettings: async (params: Partial<SettingsData>) =>
+			GetUserSettings: async () => ({ language, loadingMode }),
+			PatchUserSettings: async (params: Partial<SettingsData>) =>
 				console.log(params),
 		}),
 		useSettings: () => ({

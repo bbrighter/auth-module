@@ -9,8 +9,8 @@ export const mockPatchSettings = vi.fn();
 const createMockSettingsApi = (
 	overrides?: Partial<SettingsApi>,
 ): SettingsApi => ({
-	GetSettings: mockGetSettings,
-	PatchSettings: mockPatchSettings,
+	GetUserSettings: mockGetSettings,
+	PatchUserSettings: mockPatchSettings,
 	...overrides,
 });
 
