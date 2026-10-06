@@ -43,9 +43,9 @@ export const SettingsDialogView = ({
 	};
 
 	return (
-		<Box>
+		<Box sx={{ padding: 4 }}>
 			<DialogTitle>{t("Benutzereinstellungen")}</DialogTitle>
-			<Stack spacing={1} sx={{ padding: 4 }}>
+			<Stack spacing={2}>
 				<FormControlLabel
 					control={
 						<Checkbox checked={animations} onChange={onToggleCheckbox} />
@@ -63,8 +63,10 @@ export const SettingsDialogView = ({
 						</MenuItem>
 					))}
 				</Select>
+				<Button onClick={onSave} variant="contained">
+					Speichern
+				</Button>
 			</Stack>
-			<Button onClick={onSave}>Speichern</Button>
 		</Box>
 	);
 };
