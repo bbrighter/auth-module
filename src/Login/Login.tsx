@@ -5,8 +5,10 @@ import TextField from "@mui/material/TextField";
 import { type ChangeEvent, useEffect, useState } from "react";
 
 import { useAuth } from "../auth";
+import { useTranslation } from "../localization/useTranslation";
 
 export function Login() {
+	const t = useTranslation();
 	const { login, navigate, activeInstance } = useAuth();
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
@@ -48,13 +50,13 @@ export function Login() {
 				spacing={2}
 			>
 				<TextField
-					label="Name"
+					label={t("Name")}
 					value={name}
 					onChange={onNameChange}
 					autoComplete="username"
 				/>
 				<TextField
-					label="Passwort"
+					label={t("Passwort")}
 					type="password"
 					value={password}
 					onChange={onPasswordChange}
@@ -66,7 +68,7 @@ export function Login() {
 					loading={loginState === "loading"}
 					color={loginState === "error" ? "error" : "primary"}
 				>
-					Login
+					{t("Login")}
 				</Button>
 			</Stack>
 		</Container>

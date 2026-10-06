@@ -2,22 +2,28 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { type ChangeEvent, useState } from "react";
+import { useTranslation } from "../../localization/useTranslation";
 
-import { useUserMgmt } from "../../users";
+export type UserInviteProps = {
+	inviteUser: ({
+		userName,
+	}: {
+		userName: string;
+	}) => Promise<number | undefined>;
+};
 
-export default function UserInvite() {
-	const { inviteUser } = useUserMgmt();
-
+export const UserInviteView = ({ inviteUser }: UserInviteProps) => {
+	const t = useTranslation();
 	const [userToInvite, setUserToInvite] = useState("");
 	const [inviteLoading, setInviteLoading] = useState(false);
 	const [status, setStatus] = useState<undefined | number>();
 
 	const onInvite = async () => {
 		setInviteLoading(true);
-		const status = await inviteUser({ userName: userToInvite });
-		setStatus(status);
+		const userStatus = await inviteUser({ userName: userToInvite });
+		setStatus(userStatus);
 		setInviteLoading(false);
-		if (status === undefined) {
+		if (userStatus === undefined) {
 			setUserToInvite("");
 		}
 	};
@@ -31,16 +37,16 @@ export default function UserInvite() {
 		<Stack direction="row" spacing={2}>
 			<TextField
 				fullWidth
-				label="Nutzer einladen"
+				label={t("Nutzer einladen")}
 				value={userToInvite}
 				onChange={onChange}
 				error={status !== undefined}
-				helperText={status === 404 ? "Nutzer existiert nicht" : ""}
+				helperText={status === 404 ? t("Nutzer existiert nicht") : ""}
 				onKeyDown={(e) => e.stopPropagation()}
 			/>
 			<Button onClick={onInvite} loading={inviteLoading}>
-				Einladen
+				{t("Einladen")}
 			</Button>
 		</Stack>
 	);
-}
+};

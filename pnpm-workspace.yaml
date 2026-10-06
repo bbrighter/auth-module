@@ -1,2 +1,7 @@
+allowBuilds:
+  '@swc/core': false
+  esbuild: false
+  lefthook: false
+  msw: false
 blockExoticSubdeps: true
 minimumReleaseAge: 2880

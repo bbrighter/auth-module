@@ -1,11 +1,11 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, waitFor } from "@testing-library/react";
 import { type ReactNode, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-import type { UserAPI, UserStateAdapter } from "../users/interface";
-import { UserManagementProvider } from "../users/UserManagementProvider";
-import { UserManagement } from "./UserManagement";
+import type { UserAPI, UserStateAdapter } from "../../users/interface";
+import { UserManagementProvider } from "../../users/UserManagementProvider";
+import { UserManagement } from "../UserManagement";
+import { deleteUserByName, getDeleteUser, inviteUser } from "./selectors";
 
 const useMockAdapter = (apiOverrides?: Partial<UserAPI>) => {
 	const [users, setUsers] = useState([
@@ -62,13 +62,7 @@ describe("user management", () => {
 			</TestWrapper>,
 		);
 
-		const user = await screen.findByText("not me");
-		expect(user).toBeInTheDocument();
-		const userRow = user.closest("li") as HTMLElement;
-		const userDeleteButton = within(userRow).getByTestId("deleteUser");
-		expect(userDeleteButton).toBeInTheDocument();
-
-		await userEvent.click(userDeleteButton);
+		await waitFor(async () => await deleteUserByName("not me"));
 		await waitFor(() => {
 			expect(screen.queryByText("not me")).not.toBeInTheDocument();
 		});
@@ -84,7 +78,7 @@ describe("user management", () => {
 		const user = await screen.findByText("name");
 		expect(user).toBeInTheDocument();
 		const userRow = user.closest("li") as HTMLElement;
-		const userDeleteButton = within(userRow).getByTestId("deleteUser");
+		const userDeleteButton = getDeleteUser(userRow);
 		expect(userDeleteButton).toBeInTheDocument();
 		expect(userDeleteButton).toBeDisabled();
 	});
@@ -96,13 +90,8 @@ describe("user management", () => {
 			</TestWrapper>,
 		);
 
-		const inviteInput = await screen.findByLabelText("Nutzer einladen");
-		expect(inviteInput).toBeInTheDocument();
-		await userEvent.type(inviteInput, "new user");
-
-		const inviteButton = screen.getByText("Einladen");
-		await userEvent.click(inviteButton);
-		expect(screen.getAllByTestId("deleteUser")).toHaveLength(3);
+		await inviteUser("new user");
+		expect(screen.getAllByRole("listitem")).toHaveLength(3);
 	});
 
 	it("invite, but not found", async () => {
@@ -117,13 +106,9 @@ describe("user management", () => {
 			</TestWrapper>,
 		);
 
-		const inviteInput = await screen.findByLabelText("Nutzer einladen");
-		expect(inviteInput).toBeInTheDocument();
-		await userEvent.type(inviteInput, "new user");
+		await inviteUser("new user");
 
-		const inviteButton = screen.getByText("Einladen");
-		await userEvent.click(inviteButton);
-		expect(screen.getAllByTestId("deleteUser")).toHaveLength(2);
+		expect(screen.getAllByRole("listitem")).toHaveLength(2);
 		expect(screen.getByText("Nutzer existiert nicht")).toBeInTheDocument();
 	});
 });

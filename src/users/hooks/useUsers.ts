@@ -38,7 +38,7 @@ export const useInviteUser = () => {
 		} catch (err: unknown) {
 			if (
 				typeof err === "object" &&
-				err != null &&
+				err !== null &&
 				"status" in err &&
 				typeof err.status === "number"
 			) {

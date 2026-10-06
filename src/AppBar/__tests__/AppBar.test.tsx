@@ -2,10 +2,25 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { useAuth } from "../auth";
-import { CustomAppBar } from "./AppBar";
+import { useAuth } from "../../auth";
+import { useSettings } from "../../settings";
+import { useUserMgmt } from "../../users";
+import { CustomAppBar } from "../AppBar";
+import {
+	findAndOpenAvatarMenu,
+	getLanguageSelect,
+	getLoadingModeCheckbox,
+	getLogoutEntry,
+	getProductSwitchEntry,
+	getSaveButton,
+	getUserSettingsEntry,
+	openProductSwitch,
+	openUserManagement,
+	openUserSettings,
+} from "./utils";
 
 const mockLogout = vi.fn();
+const saveSettings = vi.fn();
 
 const defaultMockUseAuth: ReturnType<typeof useAuth> = {
 	userName: "user 1",
@@ -33,40 +48,50 @@ const defaultMockUseAuth: ReturnType<typeof useAuth> = {
 	isLoaded: true,
 };
 
-vi.mock("../auth", () => ({ useAuth: vi.fn() }));
+const defaultMockUseSettings: ReturnType<typeof useSettings> = {
+	settings: {
+		language: "de-DE",
+		loadingMode: "spinner",
+	},
+	getSettings: vi.fn(),
+	saveSettings: saveSettings,
+};
 
-vi.mock("../users", () => ({
-	useUserMgmt: () => ({
-		users: [{ id: "1", name: "name" }],
-		avatarProps: vi.fn(),
-		setUsers: vi.fn(),
-	}),
-}));
+const defaultMockUseUserMgmt: ReturnType<typeof useUserMgmt> = {
+	users: [],
+	avatarProps: vi.fn(),
+	setUsers: vi.fn(),
+	deleteUser: vi.fn(),
+	inviteUser: vi.fn(),
+};
+
+vi.mock("../../auth", () => ({ useAuth: vi.fn() }));
+vi.mock("../../settings", () => ({ useSettings: vi.fn() }));
+vi.mock("../../users", () => ({ useUserMgmt: vi.fn() }));
 
 describe("app bar", () => {
 	beforeEach(() => {
 		vi.mocked(useAuth).mockReturnValue(defaultMockUseAuth);
-		// vi.clearAllMocks()
+		vi.mocked(useSettings).mockReturnValue(defaultMockUseSettings);
+		vi.mocked(useUserMgmt).mockReturnValue(defaultMockUseUserMgmt);
 	});
 
 	it("renders", async () => {
 		render(<CustomAppBar />);
 
-		const avatarMenu = await screen.findByText("U1");
-		expect(avatarMenu).toBeInTheDocument();
-		await userEvent.click(avatarMenu);
-		expect(screen.getByText("Einkaufsliste")).toBeInTheDocument();
+		await findAndOpenAvatarMenu("U1");
+		getProductSwitchEntry();
+		getLogoutEntry();
+		getUserSettingsEntry();
 	});
 
 	describe("logout", () => {
 		it("ok", async () => {
 			render(<CustomAppBar />);
 
-			const avatarMenu = await screen.findByText("U1");
-			expect(avatarMenu).toBeInTheDocument();
-			await userEvent.click(avatarMenu);
+			await findAndOpenAvatarMenu("U1");
 
-			const logoutButton = screen.getByText("Logout");
+			const logoutButton = getLogoutEntry();
 			await userEvent.click(logoutButton);
 			expect(mockLogout).toHaveBeenCalled();
 		});
@@ -79,9 +104,7 @@ describe("app bar", () => {
 
 			render(<CustomAppBar />);
 
-			const avatarMenu = await screen.findByText("U1");
-			expect(avatarMenu).toBeInTheDocument();
-			await userEvent.click(avatarMenu);
+			await findAndOpenAvatarMenu("U1");
 
 			const logoutButton = screen
 				.getByText("Logout")
@@ -93,21 +116,18 @@ describe("app bar", () => {
 	it("open user management", async () => {
 		render(<CustomAppBar />);
 
-		const avatarMenu = await screen.findByText("U1");
-		expect(avatarMenu).toBeInTheDocument();
-		await userEvent.click(avatarMenu);
+		await findAndOpenAvatarMenu("U1");
 
-		const userMgmtButton = screen.getByText("Benutzer");
-		await userEvent.click(userMgmtButton);
+		await openUserManagement();
 		expect(screen.getByText("Nutzerverwaltung")).toBeInTheDocument();
 	});
 
 	it("change product instance", async () => {
 		render(<CustomAppBar />);
 
-		const avatarMenu = await screen.findByText("U1");
-		expect(avatarMenu).toBeInTheDocument();
-		await userEvent.click(avatarMenu);
+		await findAndOpenAvatarMenu("U1");
+
+		await openProductSwitch();
 
 		const shoppingList = screen.getByText("Einkaufsliste");
 		expect(shoppingList).toBeInTheDocument();
@@ -128,5 +148,21 @@ describe("app bar", () => {
 		);
 
 		expect(await screen.findByText("Hello")).toBeInTheDocument();
+	});
+
+	it("Open and edit settings", async () => {
+		render(<CustomAppBar />);
+
+		await findAndOpenAvatarMenu("U1");
+
+		await openUserSettings();
+		screen.getByRole("dialog");
+		await userEvent.click(getLoadingModeCheckbox());
+		getLanguageSelect();
+		await userEvent.click(getSaveButton());
+		expect(saveSettings).toHaveBeenCalledExactlyOnceWith({
+			language: "de-DE",
+			loadingMode: "none",
+		});
 	});
 });

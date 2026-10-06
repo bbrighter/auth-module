@@ -1,16 +1,18 @@
 import { Box, MenuItem, Modal } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "../../../localization/useTranslation";
+import {
+	type UserManagementProps,
+	UserManagementView as UserMgmtView,
+} from "../../../UserManagement/UserManagementView";
 
-import { useAuth } from "../../auth";
-import { UserManagement } from "../../UserManagement";
-
-export default function UserManagementButton() {
+export default function UserManagementView(props: UserManagementProps) {
+	const t = useTranslation();
 	const [open, setOpen] = useState(false);
-	const { userName } = useAuth();
 
 	return (
 		<>
-			<MenuItem onClick={() => setOpen(true)}>Benutzer</MenuItem>
+			<MenuItem onClick={() => setOpen(true)}>{t("Benutzer")}</MenuItem>
 			<Modal open={open} onClose={() => setOpen(false)}>
 				<Box
 					sx={{
@@ -25,7 +27,7 @@ export default function UserManagementButton() {
 						borderRadius: "0.5rem",
 					}}
 				>
-					<UserManagement currentUserName={userName} />
+					<UserMgmtView {...props} />
 				</Box>
 			</Modal>
 		</>
