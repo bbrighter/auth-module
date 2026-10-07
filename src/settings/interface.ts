@@ -10,11 +10,17 @@ export interface SettingsApi {
 	PatchUserSettings: (settings: Partial<SettingsData>) => Promise<void>;
 }
 
+type Language = {
+	value: string;
+	label: string;
+};
+
 export interface SettingsStateAdapter {
 	useSettingsApi(): SettingsApi | null;
 	useSettings(): {
 		settings: SettingsData;
 		setSettings: (_: Partial<SettingsData>) => void;
+		availableLanguages: Language[];
 	};
 }
 
@@ -23,5 +29,6 @@ export const defaultAdapter: SettingsStateAdapter = {
 	useSettings: () => ({
 		settings: { language: "de-DE", loadingMode: "spinner" },
 		setSettings: () => console.log("not init"),
+		availableLanguages: [{ label: "Deutsch", value: "de-DE" }],
 	}),
 };

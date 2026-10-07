@@ -58,6 +58,13 @@
 	"author": "",
 	"license": "ISC",
 	"packageManager": "pnpm@12.5.1",
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": "^24.12.0",
+			"onFail": "error"
+		}
+	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.14",
 		"@emotion/react": "^11.14.0",

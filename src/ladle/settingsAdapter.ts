@@ -20,6 +20,10 @@ export function createSettingsAdapter(
 		useSettings: () => ({
 			settings: { language, loadingMode },
 			setSettings: console.log,
+			availableLanguages: [
+				{ label: "Deutsch", value: "de-DE" },
+				{ label: "English", value: "en-US" },
+			],
 		}),
 	};
 }

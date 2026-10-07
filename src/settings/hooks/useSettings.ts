@@ -8,6 +8,12 @@ export const useSettings = () => {
 	return settings;
 };
 
+export const useAvailableLanguages = () => {
+	const adapter = useAdapter();
+	const { availableLanguages } = adapter.useSettings();
+	return availableLanguages;
+};
+
 export const useGetSettings = () => {
 	const adapter = useAdapter();
 	const { setSettings } = adapter.useSettings();
