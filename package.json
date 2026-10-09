@@ -37,6 +37,10 @@
 		"./settings": {
 			"types": "./dist/settings.d.mts",
 			"import": "./dist/settings.mjs"
+		},
+		"./localization": {
+			"types": "./dist/localization.d.mts",
+			"import": "./dist/localization.mjs"
 		}
 	},
 	"scripts": {
