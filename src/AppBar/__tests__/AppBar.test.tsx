@@ -55,6 +55,7 @@ const defaultMockUseSettings: ReturnType<typeof useSettings> = {
 	},
 	getSettings: vi.fn(),
 	saveSettings: saveSettings,
+	availableLanguages: [{ label: "Deutsch", value: "de-DE" }],
 };
 
 const defaultMockUseUserMgmt: ReturnType<typeof useUserMgmt> = {

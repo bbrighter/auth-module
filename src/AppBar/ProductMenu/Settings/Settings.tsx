@@ -7,9 +7,8 @@ import { SettingsDialogView } from "./SettingsView";
 
 export const Settings = () => {
 	const t = useTranslation();
-	const { settings, saveSettings } = useSettings();
+	const { settings, saveSettings, availableLanguages } = useSettings();
 	const [open, setOpen] = useState(false);
-	const availableLanguages = [{ value: "de-DE", label: "Deutsch" }];
 
 	const onSave = async (s: Partial<SettingsData>) => {
 		await saveSettings(s);

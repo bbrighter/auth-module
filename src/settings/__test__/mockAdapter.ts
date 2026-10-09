@@ -24,6 +24,7 @@ export const createMockSettingAdapter = (
 		useSettings: () => ({
 			settings: { language: "de-DE", loadingMode: "spinner" },
 			setSettings: mockSetSettings,
+			availableLanguages: [{ label: "Deutsch", value: "de-DE" }],
 		}),
 		...overrides,
 	};

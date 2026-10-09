@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it, type Mock, vi } from "vitest";
 import {
+	useAvailableLanguages,
 	useGetSettings,
 	useSaveSettings,
 	useSettings,
@@ -23,6 +24,18 @@ describe("hooks", () => {
 		const { result } = renderHook(() => useSettings());
 		expect(result.current.language).toBe("de-DE");
 		expect(result.current.loadingMode).toBe("spinner");
+	});
+
+	it("useAvailableLanguages", () => {
+		const adapter = createMockSettingAdapter();
+		(useAdapter as unknown as Mock).mockReturnValue(adapter);
+
+		const { result } = renderHook(() => useAvailableLanguages());
+		expect(result.current).toHaveLength(1);
+		expect(result.current[0]).toStrictEqual({
+			label: "Deutsch",
+			value: "de-DE",
+		});
 	});
 
 	it("useGetSettings", async () => {
