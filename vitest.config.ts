@@ -9,5 +9,6 @@ export default defineConfig({
 			provider: "v8",
 		},
 		include: ["src/**/*.test.{ts,tsx}"],
+		pool: "vmForks",
 	},
 });
