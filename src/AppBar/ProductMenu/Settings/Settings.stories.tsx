@@ -6,6 +6,7 @@ const defaultSettings: SettingsProps = {
 	availableLanguages: [{ value: "de-DE", label: "Deutsch" }],
 	language: "de-DE",
 	loadingMode: "spinner",
+	// biome-ignore lint/suspicious/noConsole: Only default
 	saveSettings: async (s: Partial<SettingsData>) => console.log(s),
 };
 

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noAlert: Storybook only */
 import { UserAvatar } from "./UserAvatar";
 
 export const UserAvatarStory_FirstNameOnly = () => {

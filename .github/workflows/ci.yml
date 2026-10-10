@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -23,9 +23,6 @@ jobs:
         uses: pnpm/setup@v3
         with:
             cache: true
-
-      - name: Get packages
-        run: pnpm install
 
       - name: knip
         run: pnpm knip
@@ -48,7 +45,7 @@ jobs:
   publish:
     needs: test
     if: startsWith(github.ref, 'refs/tags/v') && success()
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout
@@ -58,9 +55,6 @@ jobs:
         uses: pnpm/setup@v3
         with:
             cache: true
-
-      - name: Get packages
-        run: pnpm install
 
       - name: npm version
         run: npm --version
