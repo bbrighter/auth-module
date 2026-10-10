@@ -24,7 +24,7 @@ export default function ProductSelectionView({
 		setAnchorEl(null);
 	};
 
-	const url = (id: string) => {
+	const createUrl = (id: string) => {
 		const instance = permissions.find((p) => p.id === id);
 		if (!instance) return;
 		const url = `${instance.url}/${instance.id}`;
@@ -54,7 +54,7 @@ export default function ProductSelectionView({
 					<MenuItem
 						component="a"
 						key={i.id}
-						href={url(i.id)}
+						href={createUrl(i.id)}
 						selected={i.id === activeInstance?.id}
 					>
 						<ListItemText primary={i.productName} secondary={i.id} />
